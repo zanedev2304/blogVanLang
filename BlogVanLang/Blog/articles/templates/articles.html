@@ -26,10 +26,10 @@
     {% for article in article_list %}
         <span class="badge rounded-pill bg-success">Author: {{article.author}} {{article.role}}</span>  
         <h1><a class="link-style" href="{% url 'article_details' article.slug %}">{{article.title}}</a></h1>
-        
-
     {% endfor %}
     
+    {% include 'account/pagination.html' with page=article_list %}
+
 
 </div>
 {% endblock %}
