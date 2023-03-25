@@ -1,0 +1,27 @@
+{% extends 'bennguoidung/base.html'%}
+
+
+{% block title %}Gửi yêu cầu{% endblock %}
+
+
+{% block body %}
+<form method="post">
+    {% csrf_token %}
+    <label for="title">Tiêu đề:</label>
+    <input type="text" name="title" id="title">
+    <br>
+    <label for="content">Nội dung:</label>
+    {{ form.content }}
+    <br>
+    <label for="role">Vai trò:</label>
+    <select name="role" id="role">
+      <option value="SV">Sinh viên</option>
+      <option value="GV">Giảng viên</option>
+      <option value="PB">Phòng ban</option>
+    </select>
+    <br>
+    <button type="submit">Tạo mới</button>
+  </form>
+  
+
+  {% endblock %}
