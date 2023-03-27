@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'topicyeucau',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
-    'topicyeucau',
+    'ckeditor_uploader',
+    'crispy_forms',
+    'django.forms',
+
+
 ]
 
 MIDDLEWARE = [
@@ -107,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 
 USE_I18N = True
 
@@ -123,11 +128,13 @@ STATICFILES_DIRS = [
     "C:/Users/zanepc/Documents/caseManageCNTT/CNTTManage/quanly/static",
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL_AVATARS = '/media/avatars/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT_AVATARS = os.path.join(MEDIA_ROOT, 'avatars')
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_RESTRICT_BY_USER = True
-
+CKEDITOR_IMAGE_BACKEND = 'pillow'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -141,5 +148,11 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'width': '100%',
         'extraPlugins': 'image',
-    }
+    },
+    
+
 }
+
+CRISPY_TEMPLATE_PACK = 'uni_form'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760

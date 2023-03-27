@@ -1,21 +1,16 @@
 {% load static%}
 
 
-
-
-
 <div class="main-wrapper">
     <div class="header-container fixed-top">
         <header class="header navbar navbar-expand-sm expand-header">
             <div class="header-left d-flex">
-                <div class="logo">
-                    VanLang
-                </div>
-                <a href="" class="sidebarCollapse" data-placement="bottom">
-                    <span class="fas fa-bars"></span>
-                </a>
+                <a href="{% url 'home'%}"><img src="{% static 'assets/img/logo.8e5334db.svg'%}" alt="" class=""></a>
+
             </div>
+            
             <ul class="navbar-item flex-row ml-auto">
+                {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown user-profile-dropdown">
                     <a href="" class="nav-link user" id = "Notify" data-bs-toggle="dropdown">
                         <img src="{% static 'assets/img/notification (1).png'%}" alt="" class="icon">
@@ -46,33 +41,45 @@
                         </div>
                     </div>
                 </li>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.userprofile %}
                 <li class="nav-item dropdown user-profile-dropdown">
-                    <a href="" class="nav-link user" >
+                    <a href="{% url 'create_request'%}" class="nav-link user" >
                         <img src="{% static 'assets/img/edit.png'%}" alt="" class="icon">
                     </a>
                 </li>
                 <li class="nav-item dropdown user-profile-dropdown">
                     <a href="" class="nav-link user" id = "Notify" data-bs-toggle="dropdown">
-                        <img src="{% static 'assets/img/man.png'%}" alt="" class="icon">
+                        
+                        <img src="{{request.user.userprofile.avatar.url}}" alt="" class="icon">
                     </a>
                     <div class="dropdown-menu">
                         <div class="user-profile-section">
                             <div class="media mx-auto">
-                                <img src="{% static 'assets/img/man.png'%}" alt="" class="img-fluid mr-2">
+                                
+                                <img src="{{ request.user.userprofile.avatar.url }}" alt="" class="img-fluid mr-2">
                                 <div class="media-body">
-                                    <h5>Hà Minh Tiến</h5>
-                                    <p>Sinh viên</p>
-                                </div>
+                                    <h5>{{ request.user.username }}</h5>
+                                    <p>{{ request.user.userprofile.student_id }}</p>
+                                    {% endif %}
+                                    {%endif %}
                             </div>
                         </div>
                         <div class="dp-main-menu">
-                            <a href="" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
-                            <a href="" class="dropdown-item"><span class="fas fa-inbox"></span>Yêu cầu của tôi</a>
+                            <a href="{% url 'account-view' %}" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
+                            <a href="{% url 'my-topic' %}" class="dropdown-item"><span class="fas fa-inbox"></span>Yêu cầu của tôi</a>
                             <a href="" class="dropdown-item"><span class="fas fa-lock-open"></span>Cài đặt</a>
-                            <a href="" class="dropdown-item"><span class="fas fa-outdent"></span>Đăng xuất</a>
+                            <a href="{% url 'logout' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Đăng xuất</a>
                         </div>
                     </div>
                 </li>
+                {% else %}
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="{% url 'login' %}" class="nav-link user">Đăng nhập
+                    </a>
+                </li>
+
+                {% endif %}
             </ul>
         </header>
     </div>

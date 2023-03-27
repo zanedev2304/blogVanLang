@@ -1,0 +1,92 @@
+{% extends 'bennguoidung/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Đăng nhập{% endblock %}
+
+{% block style %}
+    <style>
+        .container {
+    border: 1px solid;
+    margin-top: 100px;
+   
+        }
+
+        .container {
+            width: 400px;
+            height: 250px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .container {
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .title-text {
+            padding-bottom: 10px;
+        }
+
+        .title-text {}
+
+        .field {
+            padding-top: 20px;
+        }
+
+        
+
+        button.btn.btn-success.btn-edit {
+            border-radius: 50px;
+            width: 375px;
+        }
+
+
+        input[type="text"] {padding: 10px;width: 100%;height: 40px;border-radius: 50px;border: 1px solid #ddd;}
+
+        input[type="password"] {
+            padding: 10px;
+            width: 100%;
+            height: 40px;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+        }
+            .field {}
+
+            input.btn.btn-success.btn-edit {
+                width: 100%;
+            }
+
+            border-radius {}
+
+            input.btn.btn-success.btn-edit {
+            border-radius: 50px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="inner">
+
+
+        <img src="{% static 'assets/img/logo.8e5334db.svg'%}" alt="" class="">
+        
+            <form action="" class="login" method="post">
+                {% csrf_token %}
+            <div class="field">
+                    <input type="text" placeholder="Email Address" name ='username' required>
+
+                </div>
+                <div class="field">
+                    <input type="password" placeholder="Password" name ='password' required>
+                </div>
+                  <div class="field">
+                      <button type="submit" class="btn btn-success btn-edit" value="Login">Login</button>
+                </div>
+            </form>
+  
+</div>
+</div>
+
+{% endblock %}

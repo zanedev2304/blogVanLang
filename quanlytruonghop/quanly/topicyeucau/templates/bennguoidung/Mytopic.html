@@ -1,0 +1,42 @@
+{% extends 'bennguoidung/base.html' %}
+
+{% block title %} Danh sách yêu cầu  {% endblock %}
+
+
+
+{% block style %}
+    <style>
+        .container{
+            margin-top: 150px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-4 mb-3">{{ blocktitle }}</h1>
+    <p><a href="{% url 'create_request' %}" class="btn btn-primary">Tạo chủ đề mới</a></p>
+    {% if my_topics %}
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Chủ đề</th>
+                    <th>Tình trạng</th>
+                    <th>Người xử lý</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for my_topic in my_topics %}
+                    <tr>
+                        <td><a href="{% url 'topic_detail' my_topic.topic.pk %}">{{ my_topic.topic.title }}</a></td>
+                        <td>{{ my_topic.status }}</td>
+                        <td>{{ my_topic.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Chưa có chủ đề nào được tạo.</p>
+    {% endif %}
+</div>
+{% endblock %}

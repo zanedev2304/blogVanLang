@@ -81,12 +81,15 @@ img{
 a{
     text-decoration: none;
     display: inline-block;
+    font-size: 18px;
+    padding: 10px;
 }
 
+
 a:hover{
+    background: #ddd;
     text-decoration: none;
-    color: var(--white-color);
-    
+    color: white;
 }
 
 ul,ol{

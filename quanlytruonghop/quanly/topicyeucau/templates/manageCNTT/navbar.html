@@ -55,13 +55,21 @@
                     <a href="" class="nav-link user" id = "Notify" data-bs-toggle="dropdown">
                         <img src="{% static 'assets/img/man.png'%}" alt="" class="icon">
                     </a>
+
+                        
+                            
+        
                     <div class="dropdown-menu">
                         <div class="user-profile-section">
                             <div class="media mx-auto">
-                                <img src="{% static 'assets/img/man.png'%}" alt="" class="img-fluid mr-2">
+                                {% if request.user.is_authenticated %}
+                                    {% if request.user.userprofile %}
+                                <img src="{{ request.user.userprofile.avatar.url }}" alt="" class="img-fluid mr-2">
                                 <div class="media-body">
-                                    <h5>Hà Minh Tiến</h5>
-                                    <p>Sinh viên</p>
+                                    <h5>{{ request.user.username }}</h5>
+                                    <p>{{ request.user.userprofile.student_id }}</p>
+                                    {% endif %}
+                                    {%endif %}
                                 </div>
                             </div>
                         </div>

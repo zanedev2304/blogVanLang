@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vn">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,20 +9,24 @@
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/sass.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/nguoidung/layets.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    
     <title>{% block title %}{% endblock %}</title>
 
-
+    
     {% include 'bennguoidung/navbar.html' %}
-
-</head>
+    {{ form.media }}
     {% block style %}
+    
+    
 
 
 
 
     {% endblock %}
+
+</head>
+    
 
 <body>
     {% block body %}
