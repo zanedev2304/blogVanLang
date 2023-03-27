@@ -19,14 +19,14 @@
 {%block body%} 
 <div class="container">
   <h1 class="mt-4 mb-3"></h1>
-  <h2>{{ topic.title }}</h2>
-  <p>{{topic.content|safe}}</p>
-  {% if topic.image %}
-    <img src="{{ topic.image.url }}" alt="{{ topic.title }}" width="200px" height="200px">
+  <h2>{{ mytopic.topic.title }}</h2>
+  <p>{{mytopic.topic.content|safe}}</p>
+  {% if mytopic.topic.image %}
+    <img src="{{ mytopic.topic.image.url }}" alt="{{ mytopic.topic.title }}" width="200px" height="200px">
   {% endif %}
-  <p><strong>Tác giả:</strong> {{ topic.author }}</p>
-  <p><strong>Tình trạng: {{ my_topics.status}}</strong></p>
-  <p><strong>Ngày gửi: {{ topic.start_time}}</strong></p>
+  <p><strong>Tác giả:</strong> {{ mytopic.topic.author }}</p>
+  <p><strong>Tình trạng: {{ mytopic.status}}</strong></p>
+  <p><strong>Ngày gửi: {{ mytopic.topic.start_time}}</strong></p>
   <p><a href="{% url 'my-topic' %}">Quay lại danh sách chủ đề của tôi</a></p>
 
 

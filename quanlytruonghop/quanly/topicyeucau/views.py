@@ -123,33 +123,8 @@ def mytopic(request):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class MyTopicsView(ListView):
-    model = MyTopic
-    template_name = 'bennguoidung/list_request.html'
-    context_object_name = 'topics'
-
-    def get_queryset(self):
-        return Topic.objects.filter(author=self.request.user)
-
 class TopicDetailView(DetailView):
-    model = Topic
+    model = MyTopic
     template_name = 'bennguoidung/topic_detail.html'
 
 
