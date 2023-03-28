@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from django.contrib.auth.models import User
 from django.utils import timezone
 from ckeditor_uploader.fields import RichTextUploadingField
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -29,6 +30,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
+    cus_id = models.CharField(max_length=10,default=0)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     role = models.CharField(max_length=10, choices=(('student', 'Student'), ('teacher', 'Teacher')), default='student')
@@ -78,9 +80,6 @@ class Topic(models.Model):
         return self.title
     
 
-
-
-
 class MyTopic(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE) 
     name = models.CharField(max_length=255) #Người xử lý
@@ -88,6 +87,7 @@ class MyTopic(models.Model):
     status = models.CharField(max_length=20,default='Chờ tiếp nhận')
     start_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return self.topic.title

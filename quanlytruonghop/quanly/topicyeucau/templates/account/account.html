@@ -21,11 +21,17 @@
       <h3>{{ request.user.userprofile.fullname }}</h3>
       <p><strong>ID:</strong> {{ request.user.userprofile.student_id }}</p>
       <p><strong>Khóa học:</strong> {{ request.user.userprofile.course }}</p>
-      <a href="{% url 'update_profile' %}" class="btn btn-primary">Cập nhật thông tin</a>
+      {% if user.is_staff or user.is_superuser %}
+        <a href="{% url 'update_profile' %}" class="btn btn-primary">Cập nhật thông tin</a>
+      {% endif %}
+      
     {% else %}
       <h3>{{ request.user.username }}</h3>
       <p>Thông tin tài khoản chưa được cập nhật.</p>
-      <a href="{% url 'update_profile' %}" class="btn btn-primary">Cập nhật thông tin</a>
+      {% if user.is_staff or user.is_superuser %}
+        <a href="{% url 'update_profile' %}" class="btn btn-primary">Cập nhật thông tin</a>
+      {% endif %}
+      
     {% endif %}
   {% else %}
     <p>Vui lòng <a href="{% url 'login' %}">đăng nhập</a> để xem thông tin tài khoản.</p>

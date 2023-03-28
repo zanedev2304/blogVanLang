@@ -42,7 +42,7 @@ def logout_view(request):
     return redirect('login')
 
 @method_decorator(login_required(login_url='/login'), name='dispatch')
-@method_decorator(user_passes_test(lambda u: u.is_superuser), name='dispatch')
+# @method_decorator(user_passes_test(lambda u: u.is_superuser), name='dispatch')
 class AccountView(View):
     def get(self, request, *args, **kwargs):
         try:
@@ -66,7 +66,7 @@ class AccountView(View):
 def is_staff_or_superuser(user):
     return user.is_authenticated and (user.is_staff or user.is_superuser)
 
-@user_passes_test(is_staff_or_superuser)
+@user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def update_user_profile(request):
     user_profile = UserProfile.objects.get(user=request.user)
 
@@ -107,9 +107,10 @@ def create_request(request):
     return render(request, 'bennguoidung/create_request.html', context)
 
 
-
+@login_required(login_url='/login')
 def mytopic(request):
-    my_topics = MyTopic.objects.all()
+    user = request.user
+    my_topics = MyTopic.objects.filter(topic__author=user)
     for topic in my_topics:
         if topic.end_time is None:
             topic.status = "Đang xử lý"

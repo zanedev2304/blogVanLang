@@ -54,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'topicyeucau.middleware.LoginRedirectMiddleware'
+
 ]
 
 ROOT_URLCONF = 'quanly.urls'
@@ -156,3 +158,6 @@ CKEDITOR_CONFIGS = {
 CRISPY_TEMPLATE_PACK = 'uni_form'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
+
+
+LOGIN_REDIRECT_URL = 'home'
