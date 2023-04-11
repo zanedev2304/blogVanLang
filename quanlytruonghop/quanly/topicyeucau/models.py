@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from django.contrib.auth.models import User
 from django.utils import timezone
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from django.core.validators import RegexValidator
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -46,6 +46,8 @@ class CustomUser(AbstractBaseUser):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_regex = RegexValidator(regex=r'^\d{10}$', message="Số điện thoại phải có 10 chữ số.")
+    phone = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True)
     student_id = models.CharField(max_length=10)
     course = models.CharField(max_length=50)
     avatar = models.ImageField(upload_to='avatars/', default='avatars/default.jpg')

@@ -1,26 +1,24 @@
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from .models import Topic,UserProfile
-
-
+from django.core.validators import RegexValidator
 
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
 class UserProfileForm(forms.ModelForm):
+    phone = forms.CharField(label='Số điện thoại', max_length=10, validators=[RegexValidator('^[0-9]*$', 'Vui lòng chỉ nhập số')])
+    
     class Meta:
         model = UserProfile
-        fields = ('student_id', 'course', 'avatar')
+        fields = ('avatar', 'phone')
         labels = {
-            'student_id': 'Mã số sinh viên',
-            'course': 'Khoá',
             'avatar': 'Ảnh đại diện'
         }
         widgets = {
             'avatar': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-            'student_id': forms.TextInput(attrs={'class': 'form-control'}),
-            'course': forms.TextInput(attrs={'class': 'form-control'})
+            'phone': forms.TextInput(attrs={'class': 'form-control'})
         }
 
 
