@@ -3,18 +3,27 @@ from .forms import TopicForm,LoginForm,UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
-from .models import UserProfile,Topic,MyTopic
+from .models import UserProfile,Topic,MyTopic,Article
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseForbidden
 from django.views.generic import ListView,DetailView
 from django.utils import timezone
 from django.utils.html import strip_tags
+from PIL import Image
+from django.conf import settings
+import uuid
+
+
+
+
 
 
 #----------------------------Quan ly tai khoan -------------------------------------
 def home_view(request):
     return render(request,'bennguoidung/home.html')
+
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -62,6 +71,7 @@ class AccountView(View):
 
 
 
+# Check if user is staff or superuser
 # Check if user is staff or superuser
 def is_staff_or_superuser(user):
     return user.is_authenticated and (user.is_staff or user.is_superuser)
@@ -122,11 +132,17 @@ def mytopic(request):
 
 
 
+def ArticleListView(request):
+    article_list = Article.objects.all()
+    return render(request,'bennguoidung/home.html',{'article_list':article_list})
 
 
 class TopicDetailView(DetailView):
     model = MyTopic
     template_name = 'bennguoidung/topic_detail.html'
+
+
+
 
 
 

@@ -27,7 +27,6 @@ class UserProfileForm(forms.ModelForm):
 
 
 
-
 class TopicForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())
     class Meta:

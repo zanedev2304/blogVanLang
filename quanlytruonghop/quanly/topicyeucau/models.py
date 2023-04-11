@@ -54,6 +54,17 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Article(models.Model):
+    title = models.CharField(max_length=255)
+    content = RichTextField()
+    image = models.ImageField(upload_to='articles/', blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
 
 
 
@@ -81,11 +92,17 @@ class Topic(models.Model):
     
 
 class MyTopic(models.Model):
+    CHOICES = (
+        ('Đã tiếp nhận', 'Đã tiếp nhận'),
+        ('Đang xử lý', 'Đang xử lý'),
+        ('Hoàn thành', 'Hoàn thành'),
+    )
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE) 
     name = models.CharField(max_length=255) #Người xử lý
     cus_id = models.CharField(max_length=20) 
-    status = models.CharField(max_length=20,default='Chờ tiếp nhận')
+    status = models.CharField(max_length=20, choices=CHOICES, default='Chờ tiếp nhận')
     start_time = models.DateTimeField(auto_now_add=True)
+    start_time_request= models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
 

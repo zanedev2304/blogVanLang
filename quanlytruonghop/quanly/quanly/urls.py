@@ -17,12 +17,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from oauth2_provider.views import AuthorizationView, TokenView
 from ckeditor_uploader import views as ckeditor_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('topicyeucau.urls')),
+    path('oauth2/authorize/', AuthorizationView.as_view(), name='authorize'),
+    path('oauth2/token/', TokenView.as_view(), name='token'),
 ]
 
 if settings.DEBUG:

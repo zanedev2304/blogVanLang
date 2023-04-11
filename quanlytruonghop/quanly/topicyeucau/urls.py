@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 
 
 
+
 urlpatterns = [
     path('',home_view,name='home'),
     path('create_request/',create_request,name='create_request'),
@@ -16,7 +17,6 @@ urlpatterns = [
     path('account/update_profile/', update_user_profile, name='update_profile'),
     path('topic/<int:pk>/', TopicDetailView.as_view(), name='topic_detail'),
     path('account/my-topic/', mytopic, name='my-topic'),
-    
     
 ]
 

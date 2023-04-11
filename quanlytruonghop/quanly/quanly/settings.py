@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_soft.apps.AdminSoftDashboardConfig',
     'topicyeucau',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,9 +43,21 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'crispy_forms',
     'django.forms',
+    'oauth2_provider',
 
 
 ]
+
+OAUTH2_PROVIDER = {
+    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.backends.azure.AzureADOAuth2',
+    'CLIENT_ID': '86eb1b06-92f0-4418-850f-0be6bb0e151d',
+    'TENANT_ID': 'f8cdef31-a31e-4b4a-93e4-5f571e91255a',
+    'CLIENT_SECRET': 'Jsn8Q~2qzurjTmo4tsTil8sW0LFzGy39jTpsRae_',
+    'RESOURCE': 'https://graph.microsoft.com',
+}
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +88,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = 'quanly.wsgi.application'
 
@@ -132,7 +148,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL_AVATARS = '/media/avatars/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT_AVATARS = os.path.join(MEDIA_ROOT, 'avatars')
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_RESTRICT_BY_USER = True
