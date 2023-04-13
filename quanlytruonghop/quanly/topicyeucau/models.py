@@ -85,6 +85,7 @@ class Topic(models.Model):
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
     content = RichTextUploadingField(blank=True, null=True)
     image = models.ImageField(upload_to='images/topic', blank=True, null=True, default=None)
+    slug = models.SlugField(max_length=100,unique=True,null=True)
     role = models.CharField(max_length=2, choices=ROLES)
     start_time = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
@@ -100,13 +101,14 @@ class MyTopic(models.Model):
         ('Hoàn thành', 'Hoàn thành'),
     )
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE) 
-    name = models.CharField(max_length=255) #Người xử lý
-    cus_id = models.CharField(max_length=20) 
+    name = models.CharField(max_length=255,blank=True) #Người xử lý
+    cus_id = models.CharField(max_length=20,blank=True) 
     status = models.CharField(max_length=20, choices=CHOICES, default='Chờ tiếp nhận')
     start_time = models.DateTimeField(auto_now_add=True)
     start_time_request= models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    
+    
 
     def __str__(self):
         return self.topic.title

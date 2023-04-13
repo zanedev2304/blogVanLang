@@ -29,4 +29,10 @@ class TopicForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = Topic
-        fields = ['title', 'content', 'role', 'image']
+        fields = ['title', 'content', 'slug', 'image']
+        labels = {
+            'title':'Chủ đề',
+            'content':'Nội dung',
+            'slug': 'Thể loại',
+            'image':'Hình ảnh',
+        }
