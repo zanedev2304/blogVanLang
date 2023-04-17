@@ -8,10 +8,15 @@
     .container{
       margin-top:100px
     }
-    p img {
-    width: 400px;
-    height: 400px;
-}
+    picture  img {
+    display: block;
+    max-width: 70%;
+    height: auto;
+    margin: 0;
+  }
+
+
+
   
 
   </style>
@@ -24,7 +29,13 @@
   <h2>{{ mytopic.topic.title }}</h2>
   <p>{{mytopic.topic.content|safe}}</p>
   {% if mytopic.topic.image %}
-    <img src="{{ mytopic.topic.image.url }}" alt="{{ mytopic.topic.title }}" width="200px" height="200px">
+  <picture>
+    <source srcset="{{ mytopic.topic.image.url }}?w=480" media="(max-width: 480px)">
+    <source srcset="{{ mytopic.topic.image.url }}?w=768" media="(max-width: 768px)">
+    <source srcset="{{ mytopic.topic.image.url }}?w=1024" media="(max-width: 1024px)">
+    <source srcset="{{ mytopic.topic.image.url }}?w=1920" media="(max-width: 1920px)">
+    <img src="{{ mytopic.topic.image.url }}" alt="{{ mytopic.topic.title }}" width="100%">
+  </picture>
   {% endif %}
   <p><strong>Tác giả:</strong> {{ mytopic.topic.author }}</p>
   <p><strong>Tình trạng: {{ mytopic.status}}</strong></p>
