@@ -36,10 +36,44 @@
     
     text-decoration: none;
     }
+    p img{
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0;
+    }
     picture  img {
     display: block;
-    max-width: 70%;
+    max-width: 100%;
     height: auto;
+    margin: 0;
+  }
+    .author-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .author-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .author-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .author-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .publish-date {
+    font-size: 14px;
     margin: 0;
   }
       
@@ -60,14 +94,21 @@
     </div>
   <h1 class="mt-4 mb-3"></h1>
   <h2>{{ article.title }}</h2>
+  <div class="author-info">
+    <img src="{{ article.author.userprofile.avatar.url }}" alt="Author Icon" class="author-icon">
+    <div class="author-details">
+      <p class="author-name">{{ article.author }}</p>
+      <p class="publish-date">{{ article.publish_date }}</p>
+    </div>
+  </div>
   <p>{{article.content|safe}}</p>
   {% if article.image %}
-  <picture>
+  <picture class="text-center">
     <source srcset="{{ article.image.url }}?w=480" media="(max-width: 480px)">
     <source srcset="{{ article.image.url }}?w=768" media="(max-width: 768px)">
     <source srcset="{{ article.image.url }}?w=1024" media="(max-width: 1024px)">
     <source srcset="{{ article.image.url }}?w=1920" media="(max-width: 1920px)">
-    <img src="{{ article.image.url }}" alt="{{ article.title }}" width="100%">
+    <img src="{{ article.image.url }}" alt="{{ article.title }}">
   </picture>
   {% endif %}
 
