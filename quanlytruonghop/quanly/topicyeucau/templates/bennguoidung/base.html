@@ -16,8 +16,14 @@
     
     {% include 'bennguoidung/navbar.html' %}
     {{ form.media }}
-    {% block style %}
+
     
+    {% block style %}
+    <style>
+        .cke_top.cke_reset_all {
+            display: none;
+            }
+    </style>
     
 
 
@@ -31,15 +37,21 @@
 <body>
     {% block body %}
     <!-- Navbar -->
+
+
+      
     
  
 
 
 
 
+      
+
+
     <!-- End navbar -->
     {% endblock %}
-    
+    {% include 'bennguoidung/footer.html' %}
 
     <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
 </body>

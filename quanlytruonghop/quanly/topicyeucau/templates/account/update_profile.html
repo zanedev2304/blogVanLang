@@ -20,15 +20,20 @@
         overflow: hidden;
         margin-bottom: 20px;
     }
+    
 
     .avatar-preview img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        object-position: center center;
     }
 
     .form-actions {
         margin-top: 20px;
+    }
+    .button-group {
+    margin-top: 20px;
     }
 </style>
 {% endblock %}
@@ -55,17 +60,69 @@
             <label for="id_avatar">Ảnh đại diện:</label>
             <div class="avatar-preview">
                 {% if form.instance.avatar %}
-                <img src="{{ form.instance.avatar.url }}" alt="Avatar preview">
+                    <div class="avatar-img">
+                        <img src="{{ form.instance.avatar.url }}" alt="Avatar preview">
+                    </div>
                 {% else %}
-                <img src="{% static 'img/default-avatar.png' %}" alt="Default avatar preview">
+                    <div class="avatar-img">
+                        <img src="{% static 'img/default-avatar.png' %}" alt="Default avatar preview">
+                    </div>
                 {% endif %}
+                <div class="avatar-actions">
+                    <button type="button" id="avatar-upload-btn" class="avatar-option">Thêm ảnh</button>
+                    <button type="button" id="avatar-delete-btn" class="avatar-option">Xóa ảnh</button>
+                </div>
             </div>
-            {{ form.avatar }}
+            <input type="file" name="avatar" accept="image/*" id="id_avatar" style="display: none;">
+            {% if userprofile.avatar %}
+                <div>Currently: <a href="{{ userprofile.avatar.url }}">{{ userprofile.avatar }}</a></div>
+                <div><input type="checkbox" name="avatar-clear" id="avatar-clear_id"><label for="avatar-clear_id">Clear</label></div>
+            {% endif %}
         </div>
-        <div class="form-actions">
+        
+        <div class="form-group button-group">
             <button type="submit" class="btn btn-primary">Cập nhật</button>
             <a href="{% url 'account-view' %}" class="btn btn-secondary">Hủy bỏ</a>
         </div>
     </form>
 </div>
+
+
+<script>
+        const avatarPreview = document.querySelector('.avatar-preview');
+        const avatarUploadBtn = document.querySelector('#avatar-upload-btn');
+        const avatarDeleteBtn = document.querySelector('#avatar-delete-btn');
+        const avatarInput = document.querySelector('#id_avatar');
+
+        avatarPreview.addEventListener('click', () => {
+            avatarInput.click();
+        });
+
+        avatarUploadBtn.addEventListener('click', () => {
+            avatarInput.click();
+        });
+
+        avatarInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                const img = document.createElement('img');
+                img.src = reader.result;
+                avatarPreview.querySelector('.avatar-img').innerHTML = '';
+                avatarPreview.querySelector('.avatar-img').appendChild(img);
+                avatarPreview.querySelector('.avatar-actions').innerHTML = '';
+                avatarPreview.querySelector('.avatar-actions').appendChild(avatarDeleteBtn);
+            }
+
+            reader.readAsDataURL(file);
+        });
+
+        avatarDeleteBtn.addEventListener('click', () => {
+            avatarPreview.querySelector('.avatar-img').innerHTML = '';
+            avatarPreview.querySelector('.avatar-actions').innerHTML = '';
+            avatarPreview.querySelector('.avatar-actions').appendChild(avatarUploadBtn);
+            document.querySelector('#delete-avatar').checked = true;
+        });
+</script>
 {% endblock %}

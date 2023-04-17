@@ -1,0 +1,77 @@
+{% extends 'bennguoidung/base.html' %}
+
+
+{% block title %} {{article.title}} {% endblock %}
+
+{%block style%}
+  <style>
+    .container{
+      margin-top:100px
+      
+    }
+    
+    .breadcrumbs {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    }
+
+    .breadcrumbs li {
+    list-style: none;
+    }
+
+    .breadcrumbs li:not(:last-child)::after {
+    content: '>';
+    margin: 0 10px;
+    }
+
+    .breadcrumbs li a {
+    color: #666;
+    text-decoration: none;
+    }
+
+    .breadcrumbs li a:hover {
+    
+    text-decoration: none;
+    }
+    picture  img {
+    display: block;
+    max-width: 70%;
+    height: auto;
+    margin: 0;
+  }
+      
+  
+
+  </style>
+
+{% endblock %}
+
+{%block body%} 
+<div class="container">
+    <div class="column column--sm-8">
+        <ol class="breadcrumbs">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="">Know ledge</a></li>
+            <li><a href="">Article</a></li>
+        </ol>
+    </div>
+  <h1 class="mt-4 mb-3"></h1>
+  <h2>{{ article.title }}</h2>
+  <p>{{article.content|safe}}</p>
+  {% if article.image %}
+  <picture>
+    <source srcset="{{ article.image.url }}?w=480" media="(max-width: 480px)">
+    <source srcset="{{ article.image.url }}?w=768" media="(max-width: 768px)">
+    <source srcset="{{ article.image.url }}?w=1024" media="(max-width: 1024px)">
+    <source srcset="{{ article.image.url }}?w=1920" media="(max-width: 1920px)">
+    <img src="{{ article.image.url }}" alt="{{ article.title }}" width="100%">
+  </picture>
+  {% endif %}
+
+</div>
+
+
+{% endblock %}

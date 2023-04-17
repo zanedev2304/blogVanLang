@@ -1,0 +1,111 @@
+{% load static%}
+
+
+
+{% block style %}
+<style>
+    /* Đổi màu nền của footer */
+    footer {
+    background-color: #f8f9fa;
+    }
+
+    /* Đổi màu chữ của footer */
+    footer {
+    color: #333;
+    }
+
+    /* Đổi kích thước font chữ của footer */
+    footer {
+    font-size: 16px;
+    }
+
+    /* Canh giữa nội dung của footer */
+    footer .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    /* Thêm đường viền cho footer */
+    footer {
+    border-top: 1px solid #ccc;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    }
+
+    /* Tăng khoảng cách giữa các hàng trong footer */
+    footer ul {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+
+    /* Đổi màu chữ cho các liên kết trong footer */
+    footer a {
+    color: #007bff;
+    }
+
+    /* Thêm hiệu ứng hover cho các liên kết trong footer */
+    footer a:hover {
+    text-decoration: underline;
+
+    }
+
+
+</style>
+
+
+{% endblock%}
+
+
+
+
+
+<footer class="bg-light text-center text-lg-start">
+    <div class="container p-4">
+      <div class="row">
+        <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Đại học Văn Lang</h5>
+          <p>
+            45 Nguyễn Khắc Nhu, Phường Cô Giang, Quận 1, Thành phố Hồ Chí Minh
+          </p>
+        </div>
+  
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Liên kết nhanh</h5>
+  
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-dark">Điểm thi</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Lịch học</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Lịch thi</a>
+            </li>
+          </ul>
+        </div>
+  
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-0">Liên hệ</h5>
+  
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-dark">Facebook</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Email</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Điện thoại</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Đại học Văn Lang: Bản quyền thuộc về trường Đại học Văn Lang.
+    </div>
+  </footer>

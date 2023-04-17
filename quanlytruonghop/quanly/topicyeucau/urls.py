@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import home_view,create_request,login_view,logout_view,AccountView,update_user_profile,TopicDetailView,mytopic
+from .views import home_view,create_request,login_view,logout_view,AccountView,update_user_profile,TopicDetailView,mytopic,ArticleDetailView
 from django.contrib.auth.views import LoginView,LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -16,6 +16,7 @@ urlpatterns = [
     path('account/', AccountView.as_view(), name='account-view'),
     path('account/update_profile/', update_user_profile, name='update_profile'),
     path('topic/<int:pk>/', TopicDetailView.as_view(), name='topic_detail'),
+    path('article/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
     path('account/my-topic/', mytopic, name='my-topic'),
     
 ]

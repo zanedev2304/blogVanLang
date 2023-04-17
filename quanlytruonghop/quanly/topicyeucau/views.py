@@ -21,7 +21,8 @@ import uuid
 
 #----------------------------Quan ly tai khoan -------------------------------------
 def home_view(request):
-    return render(request,'bennguoidung/home.html')
+    article_list = Article.objects.all()
+    return render(request, 'bennguoidung/home.html', {'article_list': article_list})
 
 
 
@@ -85,7 +86,7 @@ def update_user_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile updated successfully!')
-            return redirect('account-view')
+            return redirect('update_profile')
     else:
         form = UserProfileForm(instance=user_profile)
 
@@ -128,13 +129,13 @@ def mytopic(request):
             topic.status = "Đã xử lý"
         else:
             topic.status = "Hết hạn"
-    return render(request, 'bennguoidung/Mytopic.html', {'my_topics': my_topics})
+    return render(request, 'bennguoidung/mytopic.html', {'my_topics': my_topics})
 
 
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'bennguoidung/article_detail.html'
 
-def ArticleListView(request):
-    article_list = Article.objects.all()
-    return render(request,'bennguoidung/home.html',{'article_list':article_list})
 
 
 class TopicDetailView(DetailView):

@@ -67,7 +67,16 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+class Knowledge(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    category = models.CharField(max_length=255)
+    tags = models.CharField(max_length=255, blank=True)
+    is_featured = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.article.title
 
 
 

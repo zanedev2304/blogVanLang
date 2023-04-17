@@ -26,7 +26,7 @@ class UserProfileForm(forms.ModelForm):
 
 
 class TopicForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorWidget())
+    content = forms.CharField(widget=CKEditorWidget(config_name='default'))
     class Meta:
         model = Topic
         fields = ['title', 'content', 'slug', 'image']
