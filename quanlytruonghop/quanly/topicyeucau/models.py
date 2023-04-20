@@ -51,7 +51,7 @@ class UserProfile(models.Model):
     phone = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True)
     student_id = models.CharField(max_length=10)
     course = models.CharField(max_length=50)
-    avatar = models.ImageField(upload_to='avatars/', default='avatars/default.jpg')
+    avatar = models.ImageField(upload_to='avatars/')
 
     def __str__(self):
         return self.user.username

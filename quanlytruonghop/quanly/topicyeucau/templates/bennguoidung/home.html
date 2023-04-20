@@ -20,9 +20,10 @@
 
   .background-image {
     height: 700px;
-    background-image: url('https://media.kenhtuyensinh.vn/images/cms/2022/12/1920x1080hoc-phi-dai-hoc-van-lang-2022-2023.jpg');
+    background-image: url("{% static 'assets/img/152166687_2149163368548048_1971264751875744463_n.jpg' %}");
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: bottom;
     position: relative;
     /* để tạo tầng lớp cho phần tử container */
   }
@@ -100,6 +101,9 @@
   .promoted-articles__list .card {
   height: 150px;
 }
+h2{
+  text-align: center;
+}
 </style>
 
 {% endblock %}
@@ -109,8 +113,8 @@
   <div class="container container-inner">
     <div class="row search-box search-box--hero-unit">
       <div class="col-md-12">
-        <form class="search-box__form">
-          <input type="text" class="search-box__input" placeholder="Tìm kiếm">
+        <form class="search-box__form" method="get">
+          <input type="text" class="search-box__input" name='q' placeholder="Tìm kiếm">
           <button type="submit" class="search-box__button"><i class="fa fa-search"></i></button>
         </form>
       </div>
@@ -119,26 +123,25 @@
 </div>
 
 <div class="container">
+  <h2>Bài viết nổi bật</h2>
   <div class="row promoted-articles__list">
     {% for article in article_list %}
     <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="card mb-4">
-
         <div class="card-body">
           <h5 class="card-title">{{ article.title }}</h5>
           <p class="card-text">Đăng ngày:{{ article.updated_at }}</p>
           <a href="{% url 'article_detail' article.pk %}" class="btn btn-primary">Read More</a>
         </div>
-
       </div>
-
     </div>
     {% endfor %}
   </div>
+  <h2>Knowledge</h2>
+
 </div>
 
 
-</div>
 
 
 

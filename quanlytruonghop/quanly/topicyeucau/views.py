@@ -16,9 +16,6 @@ import uuid
 
 
 
-
-
-
 #----------------------------Quan ly tai khoan -------------------------------------
 def home_view(request):
     article_list = Article.objects.all()
@@ -74,10 +71,7 @@ class AccountView(View):
 
 # Check if user is staff or superuser
 # Check if user is staff or superuser
-def is_staff_or_superuser(user):
-    return user.is_authenticated and (user.is_staff or user.is_superuser)
 
-@user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def update_user_profile(request):
     user_profile = UserProfile.objects.get(user=request.user)
 
@@ -98,6 +92,7 @@ def update_user_profile(request):
 #----------------------------Yeu cau ca nhan -------------------------------------
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.userprofile.phone is not None, login_url='update_profile')
 def create_request(request):
     if request.method == 'POST':
         form = TopicForm(request.POST, request.FILES)
@@ -118,18 +113,15 @@ def create_request(request):
     return render(request, 'bennguoidung/create_request.html', context)
 
 
+
 @login_required(login_url='/login')
 def mytopic(request):
     user = request.user
     my_topics = MyTopic.objects.filter(topic__author=user)
-    for topic in my_topics:
-        if topic.end_time is None:
-            topic.status = "Đang xử lý"
-        elif topic.end_time > topic.start_time:
-            topic.status = "Đã xử lý"
-        else:
-            topic.status = "Hết hạn"
     return render(request, 'bennguoidung/mytopic.html', {'my_topics': my_topics})
+
+
+
 
 
 class ArticleDetailView(DetailView):
@@ -141,6 +133,18 @@ class ArticleDetailView(DetailView):
 class TopicDetailView(DetailView):
     model = MyTopic
     template_name = 'bennguoidung/topic_detail.html'
+
+
+
+# -------------------------------MANGAGE VIEW-----------------------------
+
+def manage_view(request):
+    return render(request,'manageCNTT/home.html')
+
+
+def manage_request(request):
+    mytopics = MyTopic.objects.all()
+    return render(request, 'manageCNTT/quanlyyeucau.html',{'mytopics': mytopics})
 
 
 

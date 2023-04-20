@@ -66,7 +66,10 @@
                             </div>
                         </div>
                         <div class="dp-main-menu">
-                            <a href="{% url 'account-view' %}" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
+                            <a href="{% url 'update_profile' %}" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
+                            {% if user.is_staff %}
+                            <a href="{% url 'manage_view' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Quản lý yêu cầu</a>
+                            {% endif %}
                             <a href="{% url 'my-topic' %}" class="dropdown-item"><span class="fas fa-inbox"></span>Yêu cầu của tôi</a>
                             <a href="" class="dropdown-item"><span class="fas fa-lock-open"></span>Cài đặt</a>
                             <a href="{% url 'logout' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Đăng xuất</a>

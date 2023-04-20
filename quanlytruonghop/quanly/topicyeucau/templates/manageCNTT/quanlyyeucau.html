@@ -1,0 +1,34 @@
+{% extends 'manageCNTT/base1.html' %}
+
+
+{% block title %} Quản lý yêu cầu {% endblock %}
+
+{% block style %}
+
+
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+    <h2>Danh sách yêu cầu</h2>
+    <div class="row promoted-articles__list">
+      {% for mytopic in mytopics %}
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">{{mytopic.topic.title}}</h5>
+            <p class="card-text">{{mytopic.topic.slug}}</p>
+            <a href="{% url 'topic_detail' mytopic.topic.pk%}" class="btn btn-primary">Chi tiết</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+
+
+</div>
+
+
+
+{% endblock %}
