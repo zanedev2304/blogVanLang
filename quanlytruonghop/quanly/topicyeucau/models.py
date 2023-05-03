@@ -47,11 +47,12 @@ class CustomUser(AbstractBaseUser):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255,default='Họ và Tên')
     phone_regex = RegexValidator(regex=r'^\d{10}$', message="Số điện thoại phải có 10 chữ số.")
     phone = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True)
     student_id = models.CharField(max_length=10)
     course = models.CharField(max_length=50)
-    avatar = models.ImageField(upload_to='avatars/')
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/default.jpg')
 
     def __str__(self):
         return self.user.username

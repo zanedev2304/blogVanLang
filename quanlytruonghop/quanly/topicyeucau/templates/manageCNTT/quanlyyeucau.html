@@ -18,7 +18,7 @@
           <div class="card-body">
             <h5 class="card-title">{{mytopic.topic.title}}</h5>
             <p class="card-text">{{mytopic.topic.slug}}</p>
-            <a href="{% url 'topic_detail' mytopic.topic.pk%}" class="btn btn-primary">Chi tiết</a>
+            <a href="{% url 'topic_detail' mytopic.topic.id%}" class="btn btn-primary">Chi tiết</a>
           </div>
         </div>
       </div>

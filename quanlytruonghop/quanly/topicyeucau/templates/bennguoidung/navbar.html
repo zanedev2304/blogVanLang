@@ -59,14 +59,14 @@
                                 
                                 <img src="{{ request.user.userprofile.avatar.url }}" alt="" class="img-fluid mr-2">
                                 <div class="media-body">
-                                    <h5>{{ request.user.username }}</h5>
+                                    <h5>{{ request.user.userprofile.name }}</h5>
                                     <p>{{ request.user.userprofile.student_id }}</p>
                                     {% endif %}
                                     {%endif %}
                             </div>
                         </div>
                         <div class="dp-main-menu">
-                            <a href="{% url 'update_profile' %}" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
+                            <a href="{% url 'account_profile' %}" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
                             {% if user.is_staff %}
                             <a href="{% url 'manage_view' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Quản lý yêu cầu</a>
                             {% endif %}

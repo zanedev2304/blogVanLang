@@ -13,7 +13,7 @@ from django.utils.html import strip_tags
 from PIL import Image
 from django.conf import settings
 import uuid
-
+from django.shortcuts import render, get_object_or_404
 
 
 #----------------------------Quan ly tai khoan -------------------------------------
@@ -48,26 +48,6 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-@method_decorator(login_required(login_url='/login'), name='dispatch')
-# @method_decorator(user_passes_test(lambda u: u.is_superuser), name='dispatch')
-class AccountView(View):
-    def get(self, request, *args, **kwargs):
-        try:
-            profile = UserProfile.objects.get(user=request.user)
-            form = UserProfileForm(instance=profile)
-            return render(request, 'account/account.html', {'form': form})
-        except UserProfile.DoesNotExist:
-            return render(request, 'account/account.html')
-
-    def post(self, request, *args, **kwargs):
-        try:
-            profile = UserProfile.objects.get(user=request.user)
-            form = UserProfileForm(instance=profile)
-            return render(request, 'account/account.html', {'form': form})
-        except UserProfile.DoesNotExist:
-            return render(request, 'account/account.html')
-
-
 
 # Check if user is staff or superuser
 # Check if user is staff or superuser
@@ -80,7 +60,7 @@ def update_user_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile updated successfully!')
-            return redirect('update_profile')
+            return redirect('account_profile')
     else:
         form = UserProfileForm(instance=user_profile)
 
@@ -92,7 +72,7 @@ def update_user_profile(request):
 #----------------------------Yeu cau ca nhan -------------------------------------
 
 @login_required(login_url='/login')
-@user_passes_test(lambda u: u.userprofile.phone is not None, login_url='update_profile')
+@user_passes_test(lambda u: u.userprofile.phone is not None, login_url='account_profile')
 def create_request(request):
     if request.method == 'POST':
         form = TopicForm(request.POST, request.FILES)
@@ -130,9 +110,21 @@ class ArticleDetailView(DetailView):
 
 
 
-class TopicDetailView(DetailView):
-    model = MyTopic
-    template_name = 'bennguoidung/topic_detail.html'
+
+def my_topic_detail(request, id):
+    my_topic = get_object_or_404(MyTopic, topic_id=id)
+    status_changed = False  # Biến lưu trạng thái chuyển đổi
+    if request.user.is_staff:  # Nếu người xem là staff
+        my_topic.status = 'Đã tiếp nhận'
+        my_topic.start_time_request = timezone.now()
+        status_changed = True  # Đánh dấu trạng thái đã chuyển đổi
+    if status_changed:  # Nếu trạng thái đã chuyển đổi thì lưu vào database
+        try:
+            my_topic.save()
+        except Exception as e:
+            print(e)
+    return render(request, 'bennguoidung/topic_detail.html', {'mytopic': my_topic})
+
 
 
 

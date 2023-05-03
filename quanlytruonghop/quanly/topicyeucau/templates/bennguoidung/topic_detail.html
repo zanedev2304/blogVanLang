@@ -45,10 +45,10 @@
   </picture>
   {% endif %}
   <p><strong>Tác giả:</strong> {{ mytopic.topic.author }}</p>
-  <p><strong>Tình trạng: {{ mytopic.status}}</strong></p>
   <p><strong>Ngày gửi: {{ mytopic.topic.start_time}}</strong></p>
-  <p><strong>Ngày gửi: {{ mytopic.topic.start_time_request}}</strong></p>
-  <p><strong>Ngày hoàn thành: {{ mytopic.topic.end_time}}</strong></p>
+  <p><strong>Tình trạng: {{ mytopic.status}}  </strong></p>
+  <p><strong>Ngày tiếp nhận: {{ mytopic.start_time_request}}</strong></p>
+  <p><strong>Ngày hoàn thành: {{ mytopic..end_time}}</strong></p>
 
   <p>
     {% if user.is_staff %}

@@ -13,6 +13,6 @@ class LoginRedirectMiddleware:
         response = self.get_response(request)
         
         if request.user.is_authenticated and request.path == '/login/':
-            return redirect('account-view')
+            return redirect('account_profile')
         
         return response

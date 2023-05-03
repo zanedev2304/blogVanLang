@@ -59,6 +59,10 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
+            <label for="id_student_id">Họ và Tên:</label>
+            {{ request.user.userprofile.name }}
+        </div>
+        <div class="form-group">
             <label for="id_student_id">Mã sinh viên:</label>
             {{ request.user.userprofile.student_id }}
         </div>
@@ -96,7 +100,7 @@
         
         <div class="form-group button-group">
             <button type="submit" class="btn btn-primary">Cập nhật</button>
-            <a href="{% url 'update_profile' %}" class="btn btn-secondary">Hủy bỏ</a>
+            <a href="{% url 'account_profile' %}" class="btn btn-secondary">Hủy bỏ</a>
         </div>
     </form>
 

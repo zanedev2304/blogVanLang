@@ -43,20 +43,32 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'crispy_forms',
     'django.forms',
-    'oauth2_provider',
-    
-
-
-
+    'microsoft_authentication',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account'
 ]
 
-OAUTH2_PROVIDER = {
-    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.backends.azure.AzureADOAuth2',
-    'CLIENT_ID': '86eb1b06-92f0-4418-850f-0be6bb0e151d',
-    'TENANT_ID': 'f8cdef31-a31e-4b4a-93e4-5f571e91255a',
-    'CLIENT_SECRET': 'Jsn8Q~2qzurjTmo4tsTil8sW0LFzGy39jTpsRae_',
-    'RESOURCE': 'https://graph.microsoft.com',
+MICROSOFT = {
+"app_id": "a55eb3d8-870b-4848-a772-298e85f6d6b5",
+"app_secret": "nwx8Q~NHEQZC-7ss1CIvPmI~nbTQub~DdBWu4duk",
+"redirect": "http://localhost:8000/microsoft_authentication/callback",
+"scopes": ["user.read"],
+"authority": "https://login.microsoftonline.com/common", # or using tenant "https://login.microsoftonline.com/{tenant}",
+"valid_email_domains": ["gmail.com", "outlook.com.vn", "vanlanguni.vn"],
+"logout_uri": "http://localhost:8000/admin/logout"
 }
+
+LOGIN_URL = "/microsoft_authentication/login"
+LOGIN_REDIRECT_URL = "/home"
+
+MICROSOFT_CREATE_NEW_DJANGO_USER = True
+
+
+
+
+
+
 
 
 
