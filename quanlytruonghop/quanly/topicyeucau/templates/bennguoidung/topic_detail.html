@@ -116,6 +116,7 @@ picture  img {
     <p><strong>{{ mytopic.get_formatted_end_time }} : Yêu cầu của bạn đã hoàn thành.</strong></p>
     <p><strong>Thời gian hoàn thành yêu cầu: {{ mytopic.get_formatted_elapsed_time }}.</strong></p>
     {% endif %}
+    
 
 
     {% if mytopic.status == 'Hoàn thành' %}
@@ -171,7 +172,37 @@ picture  img {
       // Hiển thị các đánh giá sao dựa trên điểm đánh giá đã lưu trong localStorage
       // Ví dụ: nếu rating = 5, thì bạn hiển thị 5 sao bằng cách đánh dấu các sao đó
   }
-</script>
 
+
+  
+</script>
+<script>
+  // Lấy phần tử HTML có id="elapsed-time"
+  const elapsedTimeElement = document.getElementById('elapsed-time');
+
+  // Lấy thời gian bắt đầu và kết thúc từ Django context
+  const startTimeRequest = new Date('{{ mytopic.start_time_request }}');
+  const endTime = new Date('{{ mytopic.end_time }}');
+
+  // Cập nhật giá trị đồng hồ đếm mỗi giây
+  setInterval(() => {
+      const currentTime = new Date();
+      const elapsedMilliseconds = currentTime - startTimeRequest;
+
+      // Kiểm tra xem đã hết thời gian hoặc chưa
+      if (currentTime > endTime) {
+          elapsedTimeElement.textContent = 'Hoàn thành';
+      } else {
+          // Tính toán thời gian đã trôi qua
+          const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
+          const hours = Math.floor(elapsedSeconds / 3600);
+          const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+          const seconds = elapsedSeconds % 60;
+
+          // Hiển thị giá trị đồng hồ đếm
+          elapsedTimeElement.textContent = `${hours}:${minutes}:${seconds}`;
+      }
+  }, 1000); // Cập nhật mỗi giây
+</script>
 
 {% endblock %}

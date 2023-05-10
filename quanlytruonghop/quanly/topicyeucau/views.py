@@ -68,7 +68,12 @@ class MyTopicView(View):
 #----------------------------Quan ly tai khoan -------------------------------------
 def home_view(request):
     article_list = Article.objects.all()
-    return render(request, 'bennguoidung/home.html', {'article_list': article_list})
+    knowledges = Knowledge.objects.all()
+    context = {
+        'article_list': article_list,
+        'knowledges': knowledges,
+    }
+    return render(request, 'bennguoidung/home.html',context )
 
 
 
@@ -159,6 +164,10 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'bennguoidung/article_detail.html'
 
+
+class KnowledgeDetailView(DetailView):
+    model = Knowledge
+    template_name = 'bennguoidung/knowledge_detail.html'
 
 def knowledge(request):
     knowledges = Knowledge.objects.all()

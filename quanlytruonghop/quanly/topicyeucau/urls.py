@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import home_view,create_request,login_view,logout_view,update_user_profile,my_topic_detail,mytopic,ArticleDetailView,manage_view,manage_request,rate_topic,knowledge
+from .views import home_view,create_request,login_view,logout_view,update_user_profile,my_topic_detail,mytopic,ArticleDetailView,manage_view,manage_request,rate_topic,knowledge,KnowledgeDetailView
 from django.contrib.auth.views import LoginView,LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -19,7 +19,8 @@ urlpatterns = [
     path('manage/',manage_view,name='manage_view'),
     path('manage_request/',manage_request,name='manage_request'),
     path('rate/',rate_topic,name='rate-view'),
-    path('knowledge/',knowledge,name='knowledge'),
+    path('knowledge/<int:pk>/', KnowledgeDetailView.as_view(), name='knowledge_detail'),
+
 
     
 

@@ -94,8 +94,7 @@ class Article(models.Model):
 class Knowledge(models.Model):
     content = models.TextField(blank=True,null=True)
     category = models.CharField(max_length=255)
-    tags = models.CharField(max_length=255, blank=True)
-    is_featured = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='images/knowledge', blank=True, null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     url = models.CharField(max_length=255,blank=True,null=True)
