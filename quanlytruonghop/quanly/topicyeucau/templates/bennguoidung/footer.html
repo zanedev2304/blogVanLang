@@ -4,112 +4,120 @@
 
 {% block style %}
 <style>
-    /* Đổi màu nền của footer */
-    footer {
-    background-color: #f8f9fa;
-    }
+  /* Đổi màu nền của footer */
+  footer {
+    background-color: #013668;
+  }
 
-    /* Đổi màu chữ của footer */
-    footer {
-    color: #333;
-    }
+  /* Đổi màu chữ của footer */
+  footer {
+    color: #fff;
+  }
 
-    /* Đổi kích thước font chữ của footer */
-    footer {
+  /* Đổi kích thước font chữ của footer */
+  footer {
     font-size: 16px;
-    }
+  }
 
-    /* Canh giữa nội dung của footer */
-    footer .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
+  /* Thêm đường viền cho footer */
+  footer {
+    border-top: 1px solid #ccc;
+  }
 
-    /* Thêm đường viền cho footer */
-    footer {
-    
-      border-top: 1px solid #ccc;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-     
-    }
-
-    /* Tăng khoảng cách giữa các hàng trong footer */
-    footer ul {
+  /* Tăng khoảng cách giữa các hàng trong footer */
+  footer ul {
     padding-top: 10px;
     padding-bottom: 10px;
-    }
+  }
 
-    /* Đổi màu chữ cho các liên kết trong footer */
-    footer a {
+  /* Đổi màu chữ cho các liên kết trong footer */
+  footer a {
+    color: #fff;
+  }
+
+  /* Thêm hiệu ứng hover cho các liên kết trong footer */
+  footer a:hover {
+    text-decoration: none;
+    background-color: transparent;
     color: #007bff;
+  }
+
+  /* Đưa @2023 Đại học Văn Lang sang góc trái ngang hàng với Liên kết */
+  footer .col-md-4.order-1 p {
+    margin-bottom: 0;
+    margin-top: auto;
+  }
+
+  /* Responsive footer */
+  @media (max-width: 767px) {
+    footer .row {
+      flex-direction: column;
     }
 
-    /* Thêm hiệu ứng hover cho các liên kết trong footer */
-    footer a:hover {
-    text-decoration: underline;
-
+    footer .col-md-4 {
+      margin-left: 0;
+      flex-basis: 100%;
     }
-    footer.bg-light.text-center.text-lg-start {
-    margin-top: 100px;
-}
-
+  }
 </style>
+
 
 
 {% endblock%}
 
-
-
-
-
-<footer class="bg-light text-center text-lg-start">
+<footer class="text-center text-lg-start custom-footer">
     <div class="container p-4">
       <div class="row">
-        <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-          <h5 class="text-uppercase">Đại học Văn Lang</h5>
-          <p>
-            45 Nguyễn Khắc Nhu, Phường Cô Giang, Quận 1, Thành phố Hồ Chí Minh
-          </p>
+        <div class="col-md-4">
+            <b style="color:#fff">© 2023 Đại học Văn Lang: Bản quyền thuộc về trường Đại học Văn Lang.</b>
         </div>
   
-        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-          <h5 class="text-uppercase">Liên kết nhanh</h5>
+        <div class="col-md-2"style="color:#fff;">
+          <h5 class="text-uppercase">Liên kết</h5>
+          <hr>
   
-          <ul class="list-unstyled mb-0">
-            <li>
-              <a href="#!" class="text-dark">Điểm thi</a>
-            </li>
-            <li>
-              <a href="#!" class="text-dark">Lịch học</a>
-            </li>
-            <li>
-              <a href="#!" class="text-dark">Lịch thi</a>
-            </li>
-          </ul>
+          <div>
+            <div>
+              <a href="https://www.vanlanguni.edu.vn/" style="color:yellow; text-decoration:none; cursor:pointer">Trang chủ</a>
+            </div>
+            <div>
+              <a href="https://thuvien.vanlanguni.edu.vn/" style="color:yellow; text-decoration:none; cursor:pointer">Thư viện </a>
+            </div>
+            <div>
+              <a href="http://saudaihoc.vanlanguni.edu.vn/" style="color:yellow; text-decoration:none; cursor:pointer">Sau đại học</a>
+            </div>
+
+
+          </div>
         </div>
-  
-        <div class="col-lg-3 col-md-6 mb-md-0">
-          <h5 class="text-uppercase mb-0">Liên hệ</h5>
-  
-          <ul class="list-unstyled">
-            <li>
-              <a href="#!" class="text-dark">Facebook</a>
-            </li>
-            <li>
-              <a href="#!" class="text-dark">Email</a>
-            </li>
-            <li>
-              <a href="#!" class="text-dark">Điện thoại</a>
-            </li>
-          </ul>
+
+        <div class="col-md-6" style="color: #fff;">
+          <h5 class="text-uppercase">Trường Đại học Văn Lang</h5>
+          <hr>
+
+          <div >
+            <div>
+              <span class="glyphicon glyphicon-map-marker" style="font-size:24px; color:#C25574"></span>
+              <b>Trụ sở: 45 Nguyễn Khắc Nhu, P. Cô Giang, Q.1, TP. HCM</b>
+            </div>
+            <div>
+              <span class="glyphicon glyphicon-map-marker" style="font-size:24px; color:#C25574"></span>
+              <b>Cơ sở 2: 233A Phan Văn Trị, P.11, Q. Bình Thạnh, TP. HCM</b>
+            </div>
+            <div>
+              <span class="glyphicon glyphicon-map-marker" style="font-size:24px; color:#C25574"></span>
+              <b>Cơ sở 3: 69/68 Đặng Thùy Trâm, P. 13, Q. Bình Thạnh, TP. HCM</b>
+            </div>
+            <div>
+              <span class="glyphicon glyphicon-map-marker" style="font-size:24px; color:#C25574"></span>
+              <b>Ký túc xá: 160/63A-B Phan Huy Ích, P. 12, Q. Gò Vấp, TP. HCM</b>
+            </div>
+          </div>
+
         </div>
+
       </div>
+
     </div>
-  
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2023 Đại học Văn Lang: Bản quyền thuộc về trường Đại học Văn Lang.
-    </div>
-  </footer>
+    
+</footer>

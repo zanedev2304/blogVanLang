@@ -26,7 +26,28 @@
     <style>
         .cke_top.cke_reset_all {
             display: none;
+        }
+
+            body {
+                height: 100%;
             }
+
+            .wrapper {
+                min-height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .content {
+             flex: 1;
+            }
+
+            footer {
+                flex-shrink: 0;
+            }
+            
+
+
     </style>
     
 
@@ -51,9 +72,12 @@
 
     <!-- End navbar -->
     {% endblock %}
+
     {% block footer %}
     {% include 'bennguoidung/footer.html' %}
     {% endblock %}
+
+    
     
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>

@@ -4,19 +4,25 @@
 
 {% block style %}
     <style>
-        .container{
-            margin-top: 150px;
-        }
+
 
         .left-menu{
-            margin-top:-90px;
+            margin-top:-118px;
         }
+        .custom-margin{
+            margin-top: 175px !important;
+        }
+
+        footer.text-center.text-lg-start.custom-footer {
+            margin-top: 541px;
+        }
+
 
     </style>
 {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container mt-5 custom-margin">
     <h1 class="mt-4 mb-3">{{ blocktitle }}</h1>
     <p><a href="{% url 'create_request' %}" class="btn btn-primary">Tạo chủ đề mới</a></p>
     {% if my_topics %}
@@ -45,4 +51,3 @@
 {% endblock %}
 
 
-{% block footer%} {% endblock %}

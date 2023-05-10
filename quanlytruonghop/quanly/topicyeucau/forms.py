@@ -38,9 +38,13 @@ class AssignTopicForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.is_end_time_updated = False
         super().__init__(*args, **kwargs)
         if self.instance.pk:
             self.fields['employee'].queryset = self.get_available_employees()
+
+        self.is_end_time_updated = False
+        
 
     def get_available_employees(self):
         employees = User.objects.filter(groups__name='Employee')
@@ -59,9 +63,10 @@ class AssignTopicForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         status = cleaned_data.get('status')
-        if status == 'Hoàn thành':
+        if status == 'Hoàn thành' and not self.is_end_time_updated:
             self.instance.status = status
             self.instance.end_time = timezone.now()
+            self.is_end_time_updated = True
         return cleaned_data
 
     

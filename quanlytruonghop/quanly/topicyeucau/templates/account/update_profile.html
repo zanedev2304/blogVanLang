@@ -6,9 +6,7 @@
 {% block style %}
 
 <style>
-    .container{
-        margin-top:60px;
-    }
+
     .form-group label {
         font-weight: bold;
     }
@@ -16,7 +14,7 @@
     .avatar-preview {
         width: 200px;
         height: 200px;
-        border-radius: 50%;
+
         overflow: hidden;
         margin-bottom: 20px;
     }
@@ -28,7 +26,6 @@
         align-items: center;
         width: 200px;
         height: 200px;
-        border-radius: 50%;
         overflow: hidden;
         margin-bottom: 20px;
         }
@@ -48,36 +45,43 @@
     pointer-events: none;
     display: none;
 }
-.left-menu{
-    margin-top:2px;
+    .left-menu{
+        margin-top:2px;
+    }
+    .custom-margin{
+        margin-top: 60px !important;
+    }
+    footer.text-center.text-lg-start.custom-footer {
+    margin-top: 274px;
 }
+
 
 
 </style>
 {% endblock %}
 
 {% block body %}
-
-<div class="container">
-    <h1>Thông tin tài khoản</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_student_id">Họ và Tên:</label>
-            {{ request.user.userprofile.name }}
-        </div>
-        <div class="form-group">
-            <label for="id_student_id">Mã sinh viên:</label>
-            {{ request.user.userprofile.student_id }}
-        </div>
-        <div class="form-group">
-            <label for="id_course">Khóa học:</label>
-            {{ request.user.userprofile.course }}
-        </div>
-        <div class="form-group">
-            <label for="id_phone">Số điện thoại:</label>
-            {{ form.phone }}
-        </div>
+<div class="wrapper"></div>
+    <div class="container mt-5 custom-margin">
+        <h1>Thông tin tài khoản</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_student_id">Họ và Tên:</label>
+                {{ request.user.userprofile.name }}
+            </div>
+            <div class="form-group">
+                <label for="id_student_id">Mã sinh viên:</label>
+                {{ request.user.userprofile.student_id }}
+            </div>
+            <div class="form-group">
+                <label for="id_course">Khóa học:</label>
+                {{ request.user.userprofile.course }}
+            </div>
+            <div class="form-group">
+                <label for="id_phone">Số điện thoại:</label>
+                {{ form.phone }}
+            </div>
         <div class="form-group">
             <label for="id_avatar">Ảnh đại diện:</label>
             <div class="avatar-preview">
@@ -107,8 +111,11 @@
             <a href="{% url 'account_profile' %}" class="btn btn-secondary">Hủy bỏ</a>
         </div>
     </form>
+    </div>
 
 </div>
+
+
 
 
 <script>

@@ -5,20 +5,19 @@
 
 {% block style %}
     <style>
-        .container {
-    border: 1px solid;
-    margin-top: 100px;
-   
-        }
-
-        .container {
+        .custom-margin{
             width: 400px;
             height: 400px;
             border: 1px solid #ddd;
             border-radius: 10px;
         }
+        .custom-margin{
+            margin-top: 100px !important;
+        }
 
-        .container {
+
+
+        .custom-margin {
             text-align: center;
             font-size: 15px;
         }
@@ -75,13 +74,17 @@
             background-color: #0062a0;
             border-color: #005b8e;
             }
+    footer.text-center.text-lg-start.custom-footer {
+        margin-top: 95px;
+    }
+
 
     </style>
 {% endblock %}
 
 
 {% block body %}
-<div class="container">
+<div class="container mt-5 custom-margin">
     <div class="inner">
 
 
