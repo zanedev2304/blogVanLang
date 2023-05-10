@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect,HttpResponse
-from .forms import TopicForm,LoginForm,UserProfileForm
+from .forms import TopicForm,LoginForm,UserProfileForm,AssignTopicForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
-from .models import UserProfile,Topic,MyTopic,Article
+from .models import UserProfile,Topic,MyTopic,Article,Rating,Knowledge
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseForbidden
@@ -14,6 +14,55 @@ from PIL import Image
 from django.conf import settings
 import uuid
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import Group,User
+import datetime
+from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpRequest
+
+def user_in_group(user, group_name):
+    """
+    Kiểm tra xem user có thuộc group có tên là group_name hay không
+    """
+    try:
+        group = Group.objects.get(name=group_name)
+        return group in user.groups.all()
+    except Group.DoesNotExist:
+        return False
+
+#----------------------------manageUser(View) -------------------------------------
+
+
+
+
+class MyTopicView(View):
+    def start_timer(self, mytopic):
+        mytopic.start_time_request = datetime.datetime.now()
+        mytopic.save()
+
+    def end_timer(self, mytopic):
+        mytopic.end_time = datetime.datetime.now()
+        elapsed_time = mytopic.end_time - mytopic.start_time_request
+        mytopic.elapsed_time = elapsed_time.seconds
+        mytopic.save()
+
+    def get(self, request, *args, **kwargs):
+        mytopic = MyTopic.objects.get(pk=self.kwargs['mytopic_id'])
+        if mytopic.status == 'Đang xử lý':
+            self.start_timer(mytopic)
+
+        context = {'mytopic': mytopic}
+        return render(request, 'bennguoidung/topic_detail.html', context)
+
+    def post(self, request, *args, **kwargs):
+        mytopic = MyTopic.objects.get(pk=self.kwargs['mytopic_id'])
+        if 'end_timer' in request.POST:
+            self.end_timer(mytopic)
+        elif 'start_timer' in request.POST:
+            self.start_timer(mytopic)
+        context = {'mytopic': mytopic}
+        return render(request, 'bennguoidung/topic_detail.html', context)
+
+
 
 
 #----------------------------Quan ly tai khoan -------------------------------------
@@ -75,7 +124,7 @@ def update_user_profile(request):
 @user_passes_test(lambda u: u.userprofile.phone is not None, login_url='account_profile')
 def create_request(request):
     if request.method == 'POST':
-        form = TopicForm(request.POST, request.FILES)
+        form = TopicForm(request.POST, request.FILES, )
         if form.is_valid():
             topic = form.save(commit=False)
             topic.author = request.user
@@ -104,40 +153,101 @@ def mytopic(request):
 
 
 
+
+
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'bennguoidung/article_detail.html'
+
+
+def knowledge(request):
+    knowledges = Knowledge.objects.all()
+    return render(request, 'bennguoidung/knowledge.html', {'knowledges': knowledges})
+
+
 
 
 
 
 def my_topic_detail(request, id):
     my_topic = get_object_or_404(MyTopic, topic_id=id)
+    obj = Rating.objects.filter(score=0).order_by("?").first()
     status_changed = False  # Biến lưu trạng thái chuyển đổi
-    if request.user.is_staff:  # Nếu người xem là staff
-        my_topic.status = 'Đã tiếp nhận'
-        my_topic.start_time_request = timezone.now()
-        status_changed = True  # Đánh dấu trạng thái đã chuyển đổi
+    form = None 
+
+    if request.method == 'POST':
+        if request.user.is_staff or request.user.groups.filter(name='manageUser').exists():
+            status = request.POST.get('status')
+            if status == 'Hoàn thành':
+                my_topic.status = 'Hoàn thành'
+                my_topic.end_time = timezone.now()
+                try:
+                    my_topic.save()
+                    # redirect to success page or somewhere else
+                except Exception as e:
+                    print(e)
+                    # do something else if save fails
+
+            else:
+                form = AssignTopicForm(request.POST, instance=my_topic)
+                if form.is_valid():
+                    my_topic = form.save() 
+                    status_changed = True  # Đánh dấu trạng thái đã chuyển đổi
+        else:
+            form = AssignTopicForm(instance=my_topic)
+    else:
+        form = AssignTopicForm(instance=my_topic)
+
+    if request.user.is_staff or request.user.groups.filter(name='manageUser').exists():  # Nếu người xem là staff
+        if my_topic.status == 'Chờ tiếp nhận':
+            my_topic.status = 'Đã tiếp nhận'
+            my_topic.start_time_request = timezone.now()
+            status_changed = True  # Đánh dấu trạng thái đã chuyển đổi
     if status_changed:  # Nếu trạng thái đã chuyển đổi thì lưu vào database
         try:
             my_topic.save()
         except Exception as e:
             print(e)
-    return render(request, 'bennguoidung/topic_detail.html', {'mytopic': my_topic})
+    context = {
+        'mytopic': my_topic,
+        'form': form,
+        'object': obj,
+    }
+    return render(request, 'bennguoidung/topic_detail.html', context)
+
+
+
+
+
+def rate_topic(request):
+    if request.method == 'POST':
+        el_id = request.POST.get('el_id')
+        val = request.POST.get('val')
+        print(val)
+        print()
+        if el_id.isdigit():
+            obj = get_object_or_404(Rating, id=int(el_id))
+            obj.score = int(val)
+            obj.save()
+            return JsonResponse({'success': True, 'score': obj.score})
+    return JsonResponse({'success': False})
+
+
 
 
 
 
 # -------------------------------MANGAGE VIEW-----------------------------
-
+@user_passes_test(lambda u: u.is_staff or u.is_superuser or user_in_group(u, 'manageUser'))
 def manage_view(request):
-    return render(request,'manageCNTT/home.html')
+    return render(request,'bennguoidung/dashboard.html')
 
 
+
+@user_passes_test(lambda u: u.is_staff or u.is_superuser or user_in_group(u, 'manageUser'))
 def manage_request(request):
     mytopics = MyTopic.objects.all()
-    return render(request, 'manageCNTT/quanlyyeucau.html',{'mytopics': mytopics})
-
+    return render(request, 'bennguoidung/quanlyyeucau.html',{'mytopics': mytopics})
 
 
 

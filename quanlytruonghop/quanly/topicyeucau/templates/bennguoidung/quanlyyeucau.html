@@ -1,0 +1,66 @@
+{% extends 'bennguoidung/base.html' %}
+
+
+{% block title %} Quản lý yêu cầu {% endblock %}
+
+{% block style %}
+
+<style>
+    .status-box {
+  position: relative;
+  background-color: #f0f0f0;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  width: fit-content;
+  max-width: 100%;
+}
+.status-box.received {
+  background-color: #ffd6cc;
+}
+.status-box.processed {
+  background-color: #b3ffb3;
+}
+
+  .status-box {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  display: inline-block;
+}
+.left-menu{
+  margin-top:-3px;
+}
+
+</style>
+
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+    <h2>Danh sách yêu cầu</h2>
+    <div class="row promoted-articles__list">
+      {% for mytopic in mytopics %}
+      <div class="col-lg-4 col-md-6 col-sm-12 ">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Mã yêu cầu:{{mytopic.topic.id}}</h5>
+            <h5 class="card-title">Tiêu đề:{{ mytopic.topic.title|truncatechars:30 }}</h5>
+            <div class="status-box{% if mytopic.status == 'Đã tiếp nhận' %} received{% elif mytopic.status == 'Hoàn thành' %} processed{% endif %}">
+              {{mytopic.status}}
+            </div>
+            <p class="card-text">Thể loại:{{mytopic.topic.category}}</p>
+            <a href="{% url 'topic_detail' mytopic.topic.id%}" class="btn btn-primary">Chi tiết</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block footer %}{% endblock %}

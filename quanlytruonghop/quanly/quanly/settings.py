@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_soft.apps.AdminSoftDashboardConfig',
+
     'topicyeucau',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,10 +44,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django.forms',
     'microsoft_authentication',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account'
+    'django_auth_adfs',
+    'channels',
+    
+
 ]
+
+
 
 MICROSOFT = {
 "app_id": "a55eb3d8-870b-4848-a772-298e85f6d6b5",
@@ -107,6 +110,7 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = 'quanly.wsgi.application'
+
 
 
 # Database
@@ -171,9 +175,6 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
 
 
 

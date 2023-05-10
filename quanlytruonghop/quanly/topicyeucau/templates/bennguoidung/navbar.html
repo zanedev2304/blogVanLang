@@ -6,7 +6,11 @@
         <header class="header navbar navbar-expand-sm expand-header">
             <div class="header-left d-flex">
                 <a href="{% url 'home'%}"><img src="{% static 'assets/img/logo.8e5334db.svg'%}" alt="" class=""></a>
-
+                {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
+                <a href="#" class="sidebarCollapse" id="toogleSidebar"data-placement="bottom">
+                    <span class="fas fa-bars"></span>
+                </a>
+                {% endif %}
             </div>
             
             <ul class="navbar-item flex-row ml-auto">
@@ -14,7 +18,7 @@
                 <li class="nav-item dropdown user-profile-dropdown">
                     <a href="" class="nav-link user" id = "Notify" data-bs-toggle="dropdown">
                         <img src="{% static 'assets/img/notification (1).png'%}" alt="" class="icon">
-                        <p class="count purple-gradient">4</p>
+                        <p class="count purple-gradient">1</p>
                     </a>
                     <div class="dropdown-menu">
                         <div class="dp-main-menu">
@@ -23,17 +27,7 @@
                                 <div class="note-info-desmis">
                                     <div class="user-notify-info">
                                         <p class="note-name">Hà Minh Tiến</p>
-                                        <p class="note-time">đã trả lời phản hồi của bạn.</p>
-                                    </div>
-                                    <p  class="status-link"><span class="fas fa-times"></span></p>
-                                </div>
-                            </a>
-                            <a href="" class="dropdown-item message-item">
-                                <img src="{% static 'assets/img/257939872_2963107480595760_6555658843355295096_n.jpg'%}" alt="" class="user-note">
-                                <div class="note-info-desmis">
-                                    <div class="user-notify-info">
-                                        <p class="note-name">Hà Minh Tiến</p>
-                                        <p class="note-time">đã trả lời phản hồi của bạn.</p>
+                                        <p class="note-comment">đã trả lời yêu cầu của bạn</p>
                                     </div>
                                     <p  class="status-link"><span class="fas fa-times"></span></p>
                                 </div>
@@ -67,7 +61,7 @@
                         </div>
                         <div class="dp-main-menu">
                             <a href="{% url 'account_profile' %}" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
-                            {% if user.is_staff %}
+                            {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
                             <a href="{% url 'manage_view' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Quản lý yêu cầu</a>
                             {% endif %}
                             <a href="{% url 'my-topic' %}" class="dropdown-item"><span class="fas fa-inbox"></span>Yêu cầu của tôi</a>
@@ -88,3 +82,32 @@
     </div>
     
 </div>
+
+{% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
+<!-- sidebar -->
+<div class="left-menu">
+    <div class="menubar-content">
+        <nav class="animated bounceInDown">
+            <ul id="sidebar">
+                <li class="active">
+                    <a href="{% url 'home'%}" ><i class="fas fa-home"></i>Trang chủ</a>
+                </li>
+
+                <li>
+                    <a href="{% url 'manage_request'%}" ><i class="fas fa-home"></i>Quản lý yêu cầu</a>
+                </li>
+
+                <li>
+                    <a href="{% url 'manage_view'%}" ><i class="fas fa-home"></i>Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="{% url 'knowledge'%}" ><i class="fas fa-home"></i>Bài nổi bật</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endif %}
+
+<!-- endsidebar -->

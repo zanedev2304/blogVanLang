@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/sass.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/nguoidung/layets.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/apexchart/apexcharts.css' %}">
+
 
     
     <title>{% block title %}{% endblock %}</title>
@@ -41,18 +45,22 @@
 
       
     
- 
-
-
-
 
       
 
 
     <!-- End navbar -->
     {% endblock %}
+    {% block footer %}
     {% include 'bennguoidung/footer.html' %}
+    {% endblock %}
+    
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>
     <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/js/apexchart/apexcharts.min.js' %}"></script>
+    <script src="{% static 'assets/js/apexchart/apexcharts.js' %}"></script>
 </body>
 </html>

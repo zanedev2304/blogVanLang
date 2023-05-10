@@ -2,23 +2,43 @@ from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User,Group
-from .models import MyTopic,UserProfile
+from .models import MyTopic,UserProfile,Topic,Rating,Article,Knowledge
 from django.utils import timezone
-from allauth.socialaccount.models import SocialAccount
+from urllib.parse import urlparse
+from django.http import request
+from django.urls import reverse
 
-def user_logged_in_handler(sender, request, user, **kwargs):
-    if user.is_superuser or user.is_staff:
-        # user is admin or staff, so let's update the status of topic requests
-        for topic_request in MyTopic.objects.filter(status='Chờ tiếp nhận'):
-            topic_request.status = 'Đã tiếp nhận'
-            topic_request.start_time_request = timezone.now()
-            topic_request.save()
+
+
+#Loại bỏ quyền staff của tài khoản Microsoft
+@receiver(user_logged_in)
+def remove_staff_status(sender, user, request, **kwargs):
+    email = user.email
+    if email and (email.endswith('@outlook.com.vn') or email.endswith('@vanlanguni.vn')):
+        if user.is_staff:
+            user.is_staff = False
+            user.save()
+
 
 @receiver(post_save, sender=MyTopic)
-def update_topic_request_status(sender, instance, **kwargs):
-    if instance.start_time_request is not None:
-        instance.status = 'Đã tiếp nhận'
-        instance.save()
+def create_rating_for_topic(sender, instance, created, **kwargs):
+    if instance.status == 'Hoàn thành':
+        Rating.objects.get_or_create(topic=instance.topic)
+
+
+
+@receiver(post_save, sender=Article)
+def update_knowledge_content(sender, instance, created, **kwargs):
+    if created:
+        # Tìm các Knowledge có category trùng khớp với category của Article
+        matching_knowledge = Knowledge.objects.filter(category=instance.category)
+        
+        for knowledge in matching_knowledge:
+            # Thêm đường dẫn của Article vào content của Knowledge
+            knowledge.content += f'<a href="{instance.get_absolute_url()}">{instance.title}</a>'
+            knowledge.save()
+
+
 
 
 @receiver(post_save, sender=User)
@@ -28,10 +48,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 
-@receiver(post_save, sender=User)
-def remove_staff_permission(sender, instance, created, **kwargs):
-    if created:
-        social_account = SocialAccount.objects.filter(user=instance).first()
-        if social_account and social_account.provider == 'microsoft':
-            instance.is_staff = False
-            instance.save()
+
+
+

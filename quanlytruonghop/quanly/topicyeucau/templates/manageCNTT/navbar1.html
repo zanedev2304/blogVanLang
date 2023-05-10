@@ -13,13 +13,12 @@
     <div class="header-container fixed-top">
         <header class="header navbar navbar-expand-sm expand-header">
             <div class="header-left d-flex">
-                <div class="logo">
-                    VanLang
-                </div>
+                <a href="{% url 'home'%}"><img src="{% static 'assets/img/logo.8e5334db.svg'%}" alt="" class=""></a>
                 <a href="#" class="sidebarCollapse" id="toogleSidebar"data-placement="bottom">
                     <span class="fas fa-bars"></span>
                 </a>
             </div>
+            
             <ul class="navbar-item flex-row ml-auto">
                 <li class="nav-item dropdown user-profile-dropdown">
                     <a href="" class="nav-link user" id = "Notify" data-bs-toggle="dropdown">
@@ -51,15 +50,18 @@
                         </div>
                     </div>
                 </li>
+
                 <li class="nav-item dropdown user-profile-dropdown">
                     <a href="{% url 'create_request'%}" class="nav-link user" >
                         <img src="{% static 'assets/img/edit.png'%}" alt="" class="icon">
                     </a>
                 </li>
+
                 <li class="nav-item dropdown user-profile-dropdown">
                     <a href="" class="nav-link user" id = "Notify" data-bs-toggle="dropdown">
-                        <img src="{% static 'assets/img/man.png'%}" alt="" class="icon">
+                        <img src="{{ request.user.userprofile.avatar.url }}" alt="" class="icon">
                     </a>
+
 
                         
                             
@@ -79,14 +81,18 @@
                             </div>
                         </div>
                         <div class="dp-main-menu">
-                            <a href="" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
+                            <a href="{% url 'account_profile' %}" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
+                            {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
                             <a href="{% url 'manage_view' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Quản lý yêu cầu</a>
-                            <a href="" class="dropdown-item"><span class="fas fa-inbox"></span>Yêu cầu của tôi</a>
+                            {% endif %}
+                            <a href="{% url 'my-topic' %}" class="dropdown-item"><span class="fas fa-inbox"></span>Yêu cầu của tôi</a>
                             <a href="" class="dropdown-item"><span class="fas fa-lock-open"></span>Cài đặt</a>
-                            <a href="" class="dropdown-item"><span class="fas fa-outdent"></span>Đăng xuất</a>
+                            <a href="{% url 'logout' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Đăng xuất</a>
                         </div>
                     </div>
+
                 </li>
+
             </ul>
         </header>
     </div>

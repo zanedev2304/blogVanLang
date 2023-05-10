@@ -1,11 +1,11 @@
 .content-wrapper {
-    margin-left: 250px;
+    margin-left: 10px;
     margin-top: 65px;
     transition: .5s;
 }
 
 .content-wrapper.hide {
-    margin-left: 0;
+    margin-left: 250px;
 }
 
 .top-chart-earn {

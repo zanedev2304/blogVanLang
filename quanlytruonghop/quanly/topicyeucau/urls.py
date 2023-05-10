@@ -1,11 +1,8 @@
 from django.urls import path,include
-from .views import home_view,create_request,login_view,logout_view,update_user_profile,my_topic_detail,mytopic,ArticleDetailView,manage_view,manage_request
+from .views import home_view,create_request,login_view,logout_view,update_user_profile,my_topic_detail,mytopic,ArticleDetailView,manage_view,manage_request,rate_topic,knowledge
 from django.contrib.auth.views import LoginView,LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
-
-
-
 
 
 urlpatterns = [
@@ -20,9 +17,14 @@ urlpatterns = [
     path('article/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
     path('account/my-topic/', mytopic, name='my-topic'),
     path('manage/',manage_view,name='manage_view'),
-    path('manage_request/',manage_request,name='manage_request')
+    path('manage_request/',manage_request,name='manage_request'),
+    path('rate/',rate_topic,name='rate-view'),
+    path('knowledge/',knowledge,name='knowledge'),
+
     
+
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
