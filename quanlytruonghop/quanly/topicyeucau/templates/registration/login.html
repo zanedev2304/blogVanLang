@@ -4,82 +4,90 @@
 {% block title %}Đăng nhập{% endblock %}
 
 {% block style %}
-    <style>
-        .custom-margin{
-            width: 400px;
-            height: 400px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        }
-        .custom-margin{
-            margin-top: 100px !important;
-        }
+<style>
+    .custom-margin {
+        width: 400px;
+        height: 400px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+    }
 
-
-
-        .custom-margin {
-            text-align: center;
-            font-size: 15px;
-        }
-
-        .title-text {
-            padding-bottom: 10px;
-        }
-
-        .title-text {}
-
-        .field {
-            padding-top: 20px;
-        }
-
-        
-
-        button.btn.btn-success.btn-edit {
-            border-radius: 50px;
-            width: 375px;
-        }
-
-
-        input[type="text"] {padding: 10px;width: 100%;height: 40px;border-radius: 50px;border: 1px solid #ddd;}
-
-        input[type="password"] {
-            padding: 10px;
-            width: 100%;
-            height: 40px;
-            border-radius: 50px;
-            border: 1px solid #ddd;
-        }
-            .field {}
-
-            input.btn.btn-success.btn-edit {
-                width: 100%;
-            }
-
-            border-radius {}
-
-            input.btn.btn-success.btn-edit {
-            border-radius: 50px;
-        }
-        .btn-primary {
-            background-color: #0078d7;
-            border-color: #0078d7;
-            }
-
-            .btn-primary:hover {
-            background-color: #006ab1;
-            border-color: #0062a0;
-            }
-
-            .btn-primary:focus {
-            background-color: #0062a0;
-            border-color: #005b8e;
-            }
-    footer.text-center.text-lg-start.custom-footer {
-        margin-top: 95px;
+    .custom-margin {
+        margin-top: 100px !important;
     }
 
 
-    </style>
+
+    .custom-margin {
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .title-text {
+        padding-bottom: 10px;
+    }
+
+    .title-text {}
+
+    .field {
+        padding-top: 20px;
+    }
+
+
+
+    button.btn.btn-success.btn-edit {
+        border-radius: 50px;
+        width: 375px;
+    }
+
+
+    input[type="text"] {
+        padding: 10px;
+        width: 100%;
+        height: 40px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+    }
+
+    input[type="password"] {
+        padding: 10px;
+        width: 100%;
+        height: 40px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+    }
+
+    .field {}
+
+    input.btn.btn-success.btn-edit {
+        width: 100%;
+    }
+
+    border-radius {}
+
+    input.btn.btn-success.btn-edit {
+        border-radius: 50px;
+    }
+
+    .btn-primary {
+        background-color: #0078d7;
+        border-color: #0078d7;
+    }
+
+    .btn-primary:hover {
+        background-color: #006ab1;
+        border-color: #0062a0;
+    }
+
+    .btn-primary:focus {
+        background-color: #0062a0;
+        border-color: #005b8e;
+    }
+
+    footer.text-center.text-lg-start.custom-footer {
+        margin-top: 95px;
+    }
+</style>
 {% endblock %}
 
 
@@ -89,28 +97,28 @@
 
 
         <img src="{% static 'assets/img/logo.8e5334db.svg'%}" alt="" class="">
-        
-            <form action="" class="login" method="post">
-                {% csrf_token %}
-            <div class="field">
-                    <input type="text" placeholder="Email Address" name ='username' required>
 
-                </div>
-                <div class="field">
-                    <input type="password" placeholder="Password" name ='password' required>
-                </div>
-                  <div class="field">
-                      <button type="submit" class="btn btn-success btn-edit" value="Login">Login</button>
-                </div>
-                
-            </form>
-            <a href="{% url 'microsoft_authentication:microsoft_authentication_login' %}">
-                <button class="btn btn-primary">
-                  <i class="fab fa-microsoft me-2"></i>Đăng nhập bằng Microsoft
-                </button>
-            </a>
-            
-              
+        <form action="" class="login" method="post">
+            {% csrf_token %}
+            <div class="field">
+                <input type="text" placeholder="Email Address" name='username' required>
+
+            </div>
+            <div class="field">
+                <input type="password" placeholder="Password" name='password' required>
+            </div>
+            <div class="field">
+                <button type="submit" class="btn btn-success btn-edit" value="Login">Login</button>
+            </div>
+
+        </form>
+        <a href="{% url 'microsoft_authentication:microsoft_authentication_login' %}">
+            <button class="btn btn-primary">
+                <i class="fab fa-microsoft me-2"></i>Đăng nhập bằng Microsoft
+            </button>
+        </a>
+
+
     </div>
 </div>
 

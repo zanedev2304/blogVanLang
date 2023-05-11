@@ -4,142 +4,162 @@
 {% block title %} {{topic.title}} {% endblock %}
 
 {%block style%}
-  <style>
-
-    p img{
-      display: block;
-      max-width: 100%;
-      height: auto;
-      margin: 0;
-    }
-    picture  img {
+<style>
+  p img {
     display: block;
     max-width: 100%;
     height: auto;
     margin: 0;
   }
+
+  picture img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
   .arrow-box {
-  position: relative;
-  background-color: #f0f0f0;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.arrow-box:before {
-  content: "";
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  margin-top: -7.5px;
-  border-width: 7.5px;
-  border-style: solid;
-  border-color: transparent #f0f0f0 transparent transparent;
-}
-.arrow-box.received {
-  background-color: #ffd6cc;
-}
-.arrow-box.processed {
-  background-color: #b3ffb3;
-}
-
-.checked {
-  color:red;
-}
-.my-btn{
-  background-color: inherit !important;
-  border: 0 !important;
-}
-p img{
-  display: block;
-  max-width: 30%;
-  height: auto;
-  margin: 0;
-  }
-picture  img {
-  display: block;
-  max-width: 30%;
-  height: auto;
-  margin: 0;
+    position: relative;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: fit-content;
+    max-width: 100%;
   }
 
-  .custom-margin{
-    margin-top:110px !important;
+  .arrow-box:before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    margin-top: -7.5px;
+    border-width: 7.5px;
+    border-style: solid;
+    border-color: transparent #f0f0f0 transparent transparent;
+  }
+
+  .arrow-box.received {
+    background-color: #ffd6cc;
+  }
+
+  .arrow-box.processed {
+    background-color: #b3ffb3;
+  }
+
+  .checked {
+    color: red;
+  }
+
+  .my-btn {
+    background-color: inherit !important;
+    border: 0 !important;
+  }
+
+  p img {
+    display: block;
+    max-width: 30%;
+    height: auto;
+    margin: 0;
+  }
+
+  picture img {
+    display: block;
+    max-width: 30%;
+    height: auto;
+    margin: 0;
+  }
+
+  .custom-margin {
+    margin-top: 110px !important;
   }
 
   footer.text-center.text-lg-start.custom-footer {
     margin-top: 140px;
-}
-
-
-
-  </style>
+  }
+</style>
 
 {% endblock %}
 
-{%block body%} 
+{%block body%}
 
 
 <div class="container mt-5 custom-margin">
   <div class="topic_detail_content">
     <h1 class="mt-4 mb-3">Req:{{mytopic.topic.id}}</h1>
     <div class="d-flex justify-content-between align-items-center">
-  
       <h2>{{ mytopic.topic.title }}</h2>
-      <div class="arrow-box{% if mytopic.status == 'Đã tiếp nhận' %} received{% elif mytopic.status == 'Hoàn thành' %} processed{% endif %}">
+      <div
+        class="arrow-box{% if mytopic.status == 'Đã tiếp nhận' %} received{% elif mytopic.status == 'Hoàn thành' %} processed{% endif %}">
         {{mytopic.status}}
       </div>
     </div>
-    
-
     <p>{{mytopic.topic.content|safe}}</p>
-    {% if mytopic.topic.image %}
-    <picture>
-      <source srcset="{{ mytopic.topic.image.url }}?w=480" media="(max-width: 480px)">
-      <source srcset="{{ mytopic.topic.image.url }}?w=768" media="(max-width: 768px)">
-      <source srcset="{{ mytopic.topic.image.url }}?w=1024" media="(max-width: 1024px)">
-      <source srcset="{{ mytopic.topic.image.url }}?w=1920" media="(max-width: 1920px)">
-      <img src="{{ mytopic.topic.image.url }}" alt="{{ mytopic.topic.title }}" width="200px">
-    </picture>
-    {% endif %}
-  
+
+    <div class="image-gallery">
+      {% if mytopic.topic.image %}
+      <picture>
+        <source srcset="{{ mytopic.topic.image.url }}?w=480" media="(max-width: 480px)">
+        <source srcset="{{ mytopic.topic.image.url }}?w=768" media="(max-width: 768px)">
+        <source srcset="{{ mytopic.topic.image.url }}?w=1024" media="(max-width: 1024px)">
+        <source srcset="{{ mytopic.topic.image.url }}?w=1920" media="(max-width: 1920px)">
+        <img src="{{ mytopic.topic.image.url }}" alt="{{ mytopic.topic.title }}" width="200px">
+      </picture>
+      {% endif %}
+    </div>
   </div>
 
   <hr>
-  
-  <div class="topic_detail_infor">
-    <p><strong>Tác giả:</strong> {{  mytopic.topic.author }}</p>
-    <p><strong>{{ mytopic.get_formatted_start_time}} : Yêu cầu đã được tạo</strong></p>
-    {% if mytopic.start_time_request %}
-    <p><strong>{{ mytopic.get_formatted_start_time_request }} : Yêu cầu của bạn đã được tiếp nhận</strong> </p>
-    {% endif %}
-    {% if mytopic.employee %}
-    <p><strong>{{ mytopic.get_formatted_start_time_employee }}: Yêu cầu của bạn được thực hiện bởi: {{ mytopic.employee }}</strong></p>
-    {% endif %}
-    {% if mytopic.status == 'Hoàn thành' %}
-    <p><strong>{{ mytopic.get_formatted_end_time }} : Yêu cầu của bạn đã hoàn thành.</strong></p>
-    <p><strong>Thời gian hoàn thành yêu cầu: {{ mytopic.get_formatted_elapsed_time }}.</strong></p>
-    {% endif %}
-    
+
+  <div class="d-flex justify-content-between">
+
+    <div class="topic_detail_inf">
+      <h4>Thông tin</h4>
+      <p><strong>Tác giả:</strong> {{ mytopic.topic.author }}</p>
+      <p><strong>Mã số sinh viên:</strong> {{ mytopic.topic.author }}</p>
 
 
-    {% if mytopic.status == 'Hoàn thành' %}
-    <form class="rate-form" action="{% url 'topic_detail' mytopic.topic.id %}" method="POST" id="{{ object.id }}">
-      {% csrf_token %}
-      <button type="submit" class="fa fa-star fa-3x my-btn" id="first" data-val="1" data-el_id="{{ object.id }}"></button>
-      <button type="submit" class="fa fa-star fa-3x my-btn" id="second" data-val="2" data-el_id="{{ object.id }}"></button>
-      <button type="submit" class="fa fa-star fa-3x my-btn" id="third" data-val="3" data-el_id="{{ object.id }}"></button>
-      <button type="submit" class="fa fa-star fa-3x my-btn" id="fourth" data-val="4" data-el_id="{{ object.id }}"></button>
-      <button type="submit" class="fa fa-star fa-3x my-btn" id="fifth" data-val="5" data-el_id="{{ object.id }}"></button>
-    </form>
-    
+    </div>
+
+    <div class="topic_detail_infor ml-auto">
+      <h4>Yêu cầu</h4>
+
+      <p><strong>{{ mytopic.get_formatted_start_time}} : Yêu cầu đã được tạo</strong></p>
+      {% if mytopic.start_time_request %}
+      <p><strong>{{ mytopic.get_formatted_start_time_request }} : Yêu cầu của bạn đã được tiếp nhận</strong> </p>
+      {% endif %}
+      {% if mytopic.employee %}
+      <p><strong>{{ mytopic.get_formatted_start_time_employee }}: Yêu cầu của bạn được thực hiện bởi: {{
+          mytopic.employee }}</strong></p>
+      {% endif %}
+      {% if mytopic.status == 'Hoàn thành' %}
+      <p><strong>{{ mytopic.get_formatted_end_time }} : Yêu cầu của bạn đã hoàn thành.</strong></p>
+      <p><strong>Thời gian hoàn thành yêu cầu: {{ mytopic.get_formatted_elapsed_time }}.</strong></p>
+      {% endif %}
+
+
+
+      {% if mytopic.status == 'Hoàn thành' %}
+      <form class="rate-form" action="{% url 'topic_detail' mytopic.topic.id %}" method="POST" id="{{ object.id }}">
+        {% csrf_token %}
+        <button type="submit" class="fa fa-star fa-3x my-btn" id="first" data-val="1"
+          data-el_id="{{ object.id }}"></button>
+        <button type="submit" class="fa fa-star fa-3x my-btn" id="second" data-val="2"
+          data-el_id="{{ object.id }}"></button>
+        <button type="submit" class="fa fa-star fa-3x my-btn" id="third" data-val="3"
+          data-el_id="{{ object.id }}"></button>
+        <button type="submit" class="fa fa-star fa-3x my-btn" id="fourth" data-val="4"
+          data-el_id="{{ object.id }}"></button>
+        <button type="submit" class="fa fa-star fa-3x my-btn" id="fifth" data-val="5"
+          data-el_id="{{ object.id }}"></button>
+      </form>
+
       <div id="confirm-box"></div>
-    {% endif %}
+      {% endif %}
 
-    
-    {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
+
+      {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
       <form action="{% url 'topic_detail' mytopic.topic.id %}" method="post">
         {% csrf_token %}
         <label for="{{ form.employee.id_for_label }}">{{ form.employee.label }}</label>
@@ -154,32 +174,33 @@ picture  img {
         <button type="submit" class="btn btn-primary" name="status" value="Hoàn thành">Hoàn thành</button>
       </form>
       {% endif %}
-    {% endif %}
-
-
-    <p>
-      {% if user.is_staff %}
-        <a href="{% url 'manage_request' %}">Danh sách chủ đề</a>
-      {% else %}
-        <a href="{% url 'my-topic' %}">Quay lại danh sách chủ đề của tôi</a>
       {% endif %}
-    </p>
+
+
+      <p>
+        {% if user.is_staff %}
+        <a href="{% url 'manage_request' %}">Danh sách chủ đề</a>
+        {% else %}
+        <a href="{% url 'my-topic' %}">Quay lại danh sách chủ đề của tôi</a>
+        {% endif %}
+      </p>
+    </div>
 
   </div>
-  
 
-  
+
+
 </div>
 
 
 <script>
   var rating = localStorage.getItem('rating');
   if (rating) {
-      // Hiển thị các đánh giá sao dựa trên điểm đánh giá đã lưu trong localStorage
-      // Ví dụ: nếu rating = 5, thì bạn hiển thị 5 sao bằng cách đánh dấu các sao đó
+    // Hiển thị các đánh giá sao dựa trên điểm đánh giá đã lưu trong localStorage
+    // Ví dụ: nếu rating = 5, thì bạn hiển thị 5 sao bằng cách đánh dấu các sao đó
   }
 
 
-  
+
 </script>
 {% endblock %}

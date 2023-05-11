@@ -16,7 +16,7 @@ class UserProfileForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ('avatar', 'phone')
+        fields = ('avatar', 'phone',)
         labels = {
             'avatar': 'Ảnh đại diện'
         }

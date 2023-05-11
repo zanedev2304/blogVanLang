@@ -4,51 +4,53 @@
 {% block title %} {{article.title}} {% endblock %}
 
 {%block style%}
-  <style>
-    .container{
-      margin-top:100px
-      
-    }
-    
-    .breadcrumbs {
+<style>
+  .container {
+    margin-top: 100px
+  }
+
+  .breadcrumbs {
     display: flex;
     align-items: center;
     font-size: 16px;
     margin-bottom: 20px;
     justify-content: flex-start;
-    }
+  }
 
-    .breadcrumbs li {
+  .breadcrumbs li {
     list-style: none;
-    }
+  }
 
-    .breadcrumbs li:not(:last-child)::after {
+  .breadcrumbs li:not(:last-child)::after {
     content: '>';
     margin: 0 10px;
-    }
+  }
 
-    .breadcrumbs li a {
+  .breadcrumbs li a {
     color: #666;
     text-decoration: none;
-    }
+  }
 
-    .breadcrumbs li a:hover {
-    
+  .breadcrumbs li a:hover {
+
     text-decoration: none;
-    }
-    p img{
-      display: block;
-      max-width: 100%;
-      height: auto;
-      margin: 0;
-    }
-    picture  img {
+  }
+
+  p img {
     display: block;
     max-width: 100%;
     height: auto;
     margin: 0;
   }
-    .author-info {
+
+  picture img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .author-info {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
@@ -76,26 +78,23 @@
     font-size: 14px;
     margin: 0;
   }
-  .left-menu{
-    margin-top:-40px;
-  }
-  
-      
-  
 
-  </style>
+  .left-menu {
+    margin-top: -40px;
+  }
+</style>
 
 {% endblock %}
 
-{%block body%} 
+{%block body%}
 <div class="container">
-    <div class="column column--sm-8">
-        <ol class="breadcrumbs">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="">Know ledge</a></li>
-            <li><a href="">Article</a></li>
-        </ol>
-    </div>
+  <div class="column column--sm-8">
+    <ol class="breadcrumbs">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="">Know ledge</a></li>
+      <li><a href="">Article</a></li>
+    </ol>
+  </div>
   <h1 class="mt-4 mb-3"></h1>
   <h2>{{ article.title }}</h2>
   <div class="author-info">
@@ -119,8 +118,8 @@
 
 </div>
 
- 
-  
+
+
 
 </div>
 

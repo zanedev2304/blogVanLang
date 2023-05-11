@@ -1,115 +1,118 @@
 {% extends "bennguoidung/base.html" %}
 {% block title %}
-    Tạo yêu cầu
+Tạo yêu cầu
 {% endblock %}
 
 {% block style %}
 <style>
-    /* Custom styles for create_request.html */
+  /* Custom styles for create_request.html */
 
-    .card-header {
-        background-color: #007bff;
-        color: white;
-    }
+  .card-header {
+    background-color: #007bff;
+    color: white;
+  }
 
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
 
-    .btn-primary:hover {
-        background-color: #0069d9;
-        border-color: #0062cc;
-    }
+  .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
 
-    .btn-primary:focus,
-    .btn-primary.focus {
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
-    }
+  .btn-primary:focus,
+  .btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+  }
 
-    .btn-primary.disabled,
-    .btn-primary:disabled {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
+  .btn-primary.disabled,
+  .btn-primary:disabled {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
 
-    .btn-primary:not(:disabled):not(.disabled):active,
-    .btn-primary:not(:disabled):not(.disabled).active,
-    .show>.btn-primary.dropdown-toggle {
-        background-color: #0062cc;
-        border-color: #005cbf;
-    }
+  .btn-primary:not(:disabled):not(.disabled):active,
+  .btn-primary:not(:disabled):not(.disabled).active,
+  .show>.btn-primary.dropdown-toggle {
+    background-color: #0062cc;
+    border-color: #005cbf;
+  }
 
-    .btn-primary:not(:disabled):not(.disabled):active:focus,
-    .btn-primary:not(:disabled):not(.disabled).active:focus,
-    .show>.btn-primary.dropdown-toggle:focus {
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
-    }
+  .btn-primary:not(:disabled):not(.disabled):active:focus,
+  .btn-primary:not(:disabled):not(.disabled).active:focus,
+  .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+  }
 
-    .topic-image {
-        max-width: 100%;
-        height: auto;
-    }
-    input#id_title {
+  .topic-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  input#id_title {
     width: 100%;
   }
-    input#id_category{
-      width: 100%;
-    }
-    input#id_image {
+
+  input#id_category {
+    width: 100%;
+  }
+
+  input#id_image {
     padding: 20px;
     margin-top: 10px;
     width: 100%;
     border: 1px solid;
     /* justify-content: center; */
-}
-  .col-md-6.offset-md-4{
+  }
+
+  .col-md-6.offset-md-4 {
     margin: 0;
     margin-top: 10px;
   }
+
   .left-menu {
     margin-top: -18px;
   }
 
-  .custom-margin{
+  .custom-margin {
     margin-top: 80px !important;
   }
+
   footer.text-center.text-lg-start.custom-footer {
-      margin-top: 2px;
-      }
-
-  
-
+    margin-top: 2px;
+  }
 </style>
 {% endblock %}
 
 {% block body %}
 <div class="container mt-5 custom-margin">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="text-center">Gửi yêu cầu</h3>
-          </div>
-          <div class="card-body">
-            <form method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <div class="form-group row">
-                <div class="col-md-6 offset-md-4">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          {% if form.instance.image %}
-            <div class="card-footer">
-                <img src="{{ form.instance.image.url }}" class="topic-image">
-            </div>
-          {% endif %}
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Gửi yêu cầu</h3>
         </div>
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-group row">
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        {% if form.instance.image %}
+        <div class="card-footer">
+          <img src="{{ form.instance.image.url }}" class="topic-image">
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
+</div>
 </div>
 {% endblock %}

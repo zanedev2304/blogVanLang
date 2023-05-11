@@ -7,27 +7,27 @@
 
 <style>
    .left-menu {
-   margin-top: -5px;
+      margin-top: -5px;
    }
 </style>
 {% endblock %}
 {% block body %}
 {% for knowledge in knowledges %}
-   <h2>{{ knowledge.article.title }}</h2>
-   <p>Category: {{ knowledge.category }}</p>
-   <p>Tags: {{ knowledge.tags }}</p>
-   <p>Is Featured: {{ knowledge.is_featured }}</p>
-   <p>Created at: {{ knowledge.created_at }}</p>
-   <p>Updated at: {{ knowledge.updated_at }}</p>
-   <div class="article-links">
-      {% for link in knowledge.article_links %}
-         <p><a href="{{ link.url }}">{{ link.title }}</a></p>
-      {% empty %}
-         <p>No links available.</p>
-      {% endfor %}
-   </div>
+<h2>{{ knowledge.article.title }}</h2>
+<p>Category: {{ knowledge.category }}</p>
+<p>Tags: {{ knowledge.tags }}</p>
+<p>Is Featured: {{ knowledge.is_featured }}</p>
+<p>Created at: {{ knowledge.created_at }}</p>
+<p>Updated at: {{ knowledge.updated_at }}</p>
+<div class="article-links">
+   {% for link in knowledge.article_links %}
+   <p><a href="{{ link.url }}">{{ link.title }}</a></p>
+   {% empty %}
+   <p>No links available.</p>
+   {% endfor %}
+</div>
 {% empty %}
-   <p>No knowledge articles found.</p>
+<p>No knowledge articles found.</p>
 {% endfor %}
 {% endblock %}
 {% block scripts %}
