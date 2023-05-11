@@ -1,0 +1,47 @@
+{% extends 'client/base.html' %}
+{% load static %}
+
+{% block title %}{{request.user.username}}{% endblock %}
+
+{% block style %}
+<style>
+    .container {
+    margin-top: 100px;
+    text-align: center;
+    
+  }
+  img{
+    overflow: hidden !important;
+  }
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1>Thông tin tài khoản</h1>
+  {% if request.user.is_authenticated %}
+    {% if request.user.userprofile %}
+      <img src="{{ request.user.userprofile.avatar.url }}" alt="Avatar" class="img-fluid rounded-circle" height="100px" width="200px">
+      <h3>{{ request.user.userprofile.fullname }}</h3>
+      <p><strong>ID:</strong> {{ request.user.userprofile.student_id }}</p>
+      <p><strong>Khóa học:</strong> {{ request.user.userprofile.course }}</p>
+      {% if user.is_authenticated%}
+        <a href="{% url 'update_profile' %}" class="btn btn-primary">Cập nhật thông tin</a>
+      {% endif %}
+      
+    {% else %}
+      <h3>{{ request.user.username }}</h3>
+      <p>Thông tin tài khoản chưa được cập nhật.</p>
+      {% if user.is_authenticated %}
+        <a href="{% url 'update_profile' %}" class="btn btn-primary">Cập nhật thông tin</a>
+      {% endif %}
+      
+    {% endif %}
+  {% else %}
+    <p>Vui lòng <a href="{% url 'login' %}">đăng nhập</a> để xem thông tin tài khoản.</p>
+  {% endif %}
+
+</div>
+{% endblock %}

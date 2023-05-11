@@ -51,7 +51,7 @@ class MyTopicView(View):
             self.start_timer(mytopic)
 
         context = {'mytopic': mytopic}
-        return render(request, 'bennguoidung/topic_detail.html', context)
+        return render(request, 'client/topic_detail.html', context)
 
     def post(self, request, *args, **kwargs):
         mytopic = MyTopic.objects.get(pk=self.kwargs['mytopic_id'])
@@ -60,7 +60,7 @@ class MyTopicView(View):
         elif 'start_timer' in request.POST:
             self.start_timer(mytopic)
         context = {'mytopic': mytopic}
-        return render(request, 'bennguoidung/topic_detail.html', context)
+        return render(request, 'client/topic_detail.html', context)
 
 
 
@@ -73,7 +73,7 @@ def home_view(request):
         'article_list': article_list,
         'knowledges': knowledges,
     }
-    return render(request, 'bennguoidung/home.html',context )
+    return render(request, 'client/home.html',context )
 
 
 
@@ -95,7 +95,7 @@ def login_view(request):
     else:
         form = LoginForm()
     
-    return render(request,'registration/login.html',{'form':form})
+    return render(request,'client/registration/login.html',{'form':form})
 
 
 def logout_view(request):
@@ -119,7 +119,7 @@ def update_user_profile(request):
         form = UserProfileForm(instance=user_profile)
 
     context = {'form': form}
-    return render(request, 'account/update_profile.html', context)
+    return render(request, 'client/account/update_profile.html', context)
 
 
 
@@ -144,7 +144,7 @@ def create_request(request):
         form = TopicForm()
 
     context = {'form': form}
-    return render(request, 'bennguoidung/create_request.html', context)
+    return render(request, 'client/create_request.html', context)
 
 
 
@@ -152,7 +152,7 @@ def create_request(request):
 def mytopic(request):
     user = request.user
     my_topics = MyTopic.objects.filter(topic__author=user)
-    return render(request, 'bennguoidung/mytopic.html', {'my_topics': my_topics})
+    return render(request, 'client/mytopic.html', {'my_topics': my_topics})
 
 
 
@@ -162,16 +162,16 @@ def mytopic(request):
 
 class ArticleDetailView(DetailView):
     model = Article
-    template_name = 'bennguoidung/article_detail.html'
+    template_name = 'client/article_detail.html'
 
 
 class KnowledgeDetailView(DetailView):
     model = Knowledge
-    template_name = 'bennguoidung/knowledge_detail.html'
+    template_name = 'client/knowledge_detail.html'
 
 def knowledge(request):
     knowledges = Knowledge.objects.all()
-    return render(request, 'bennguoidung/knowledge.html', {'knowledges': knowledges})
+    return render(request, 'client/knowledge.html', {'knowledges': knowledges})
 
 
 
@@ -222,7 +222,7 @@ def my_topic_detail(request, id):
         'form': form,
         'object': obj,
     }
-    return render(request, 'bennguoidung/topic_detail.html', context)
+    return render(request, 'client/topic_detail.html', context)
 
 
 
@@ -249,14 +249,14 @@ def rate_topic(request):
 # -------------------------------MANGAGE VIEW-----------------------------
 @user_passes_test(lambda u: u.is_staff or u.is_superuser or user_in_group(u, 'manageUser'))
 def manage_view(request):
-    return render(request,'bennguoidung/dashboard.html')
+    return render(request,'client/dashboard.html')
 
 
 
 @user_passes_test(lambda u: u.is_staff or u.is_superuser or user_in_group(u, 'manageUser'))
 def manage_request(request):
     mytopics = MyTopic.objects.all()
-    return render(request, 'bennguoidung/quanlyyeucau.html',{'mytopics': mytopics})
+    return render(request, 'client/quanlyyeucau.html',{'mytopics': mytopics})
 
 
 
