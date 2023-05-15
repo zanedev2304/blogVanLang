@@ -69,9 +69,9 @@
                                 </div>
                                 <div class="dp-main-menu">
                                     <a href="{% url 'account_profile' %}" class="dropdown-item"><span class="fas fa-user"></span>Trang cá nhân</a>
-                                    {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
+                                    <!-- {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
                                     <a href="{% url 'manage_view' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Quản lý yêu cầu</a>
-                                    {% endif %}
+                                    {% endif %} -->
                                     <a href="{% url 'my-topic' %}" class="dropdown-item"><span class="fas fa-inbox"></span>Yêu cầu của tôi</a>
                                     <a href="" class="dropdown-item"><span class="fas fa-lock-open"></span>Cài đặt</a>
                                     <a href="{% url 'logout' %}" class="dropdown-item"><span class="fas fa-outdent"></span>Đăng xuất</a>
@@ -95,13 +95,22 @@
     <div class="menubar-content">
         <nav class="animated bounceInDown">
             <ul id="sidebar">
-                <li class="active">
-                    <a href="{% url 'manage_request'%}" ><i class="fas fa-home"></i>Quản lý yêu cầu</a>
-                </li>
+                
 
                 <li>
                     <a href="{% url 'manage_view'%}" ><i class="fas fa-home"></i>Dashboard</a>
                 </li>
+
+                <li class="sub-menu">
+                    <a href="#!" ><i class="fas fa-home"></i>Quản lý yêu cầu
+                        <div class="fa fa-caret-down right"></div>
+                    </a>
+                    <ul class="left-menu-dp">
+                        <li><a href="{% url 'manage_request'%}"><i class="fas fa-user-circle"></i>Danh sách yêu cầu</a></li>
+                        <li><a href=""><i class="fas fa-user-circle"></i>Điều chỉnh Thể loại</a></li>
+                    </ul>
+                </li>
+
 
                 <li class="sub-menu">
                     <a href="#!" ><i class="fas fa-home"></i>Quản lý bài viết
@@ -109,7 +118,7 @@
                     </a>
                     <ul class="left-menu-dp">
                         <li><a href="{% url 'create_article'%}"><i class="fas fa-user-circle"></i>Viết bài viết</a></li>
-                        <li><a href="{% url 'create_article'%}"><i class="fas fa-user-circle"></i>Danh sách bài viết</a></li>
+                        <li><a href="{% url 'article_list'%}"><i class="fas fa-user-circle"></i>Danh sách bài viết</a></li>
                     </ul>
                 </li>
 
@@ -118,8 +127,8 @@
                         <div class="fa fa-caret-down right"></div>
                     </a>
                     <ul class="left-menu-dp">
-                        <li><a href=""><i class="fas fa-user-circle"></i>Tạo Knowledge</a></li>
-                        <li><a href=""><i class="fas fa-user-circle"></i>Danh sách Knowledge</a></li>
+                        <li><a href="{% url 'create_knowledge'%}"><i class="fas fa-user-circle"></i>Tạo Knowledge</a></li>
+                        <li><a href="{% url 'knowledge_list'%}"><i class="fas fa-user-circle"></i>Danh sách Knowledge</a></li>
                     </ul>
                 </li>
                 

@@ -1,0 +1,200 @@
+{% extends 'client/base.html' %}
+
+{% load static%}
+{% block title %} Quản lý yêu cầu {% endblock %}
+
+{% block style %}
+
+<style>
+  .status-box {
+    position: relative;
+    background-color: #f0f0f0;
+    padding: 5px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .status-box.submit {
+    background-color: #ccc;
+  }
+
+
+  .status-box.received {
+    background-color: #ffd6cc;
+  }
+
+
+  .status-box {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    display: inline-block;
+  }
+
+  .left-menu {
+    margin-top: -3px;
+  }
+
+  .filter-icon {
+    font-size: 20px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
+  .filter-box {
+    display: none;
+    position: absolute;
+    background-color: #f0f0f0;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .filter-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .filter-box li {
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+
+  .notification-wrapper {
+    position: relative;
+  }
+
+  .notification-icon {
+    display: inline-block;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    display: none;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
+  .notification-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .notification-list li {
+    padding: 10px;
+  }
+
+  .notification-list li:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+</style>
+
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+  <h2>
+    Knowledges
+    <!-- <span class="notification-wrapper">
+      <a href="#" class="notification-icon" id="notification-icon">
+        <img src="{% static 'assets/img/notification (1).png' %}" alt="" class="icon">
+      </a>
+      <div class="dropdown-menu" id="notification-menu">
+        <ul class="notification-list">
+          <li class="filter-option" data-status="cho-tiep-nhan">Chờ tiếp nhận</li>
+          <li class="filter-option" data-status="da-tiep-nhan">Đã tiếp nhận</li>
+          <li class="filter-option" data-status="dang-xu-ly">Đang xử lý</li>
+          <li class="filter-option" data-status="hoan-thanh">Hoàn thành</li>
+
+
+        </ul>
+      </div>
+    </span> -->
+  </h2>
+
+
+  <div class="row promoted-articles__list">
+    {% for knowledge in knowledges %}
+    <div class="col-lg-4 col-md-6 col-sm-12 ">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Tiêu đề:{{ knowledge.category }}</h5>
+          <a href="{% url 'knowledge_detail' knowledge.id%}" class="btn btn-primary">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% block footer %}{% endblock %}
+
+
+<script>
+  // JavaScript code
+  document.addEventListener('DOMContentLoaded', function () {
+    var notificationIcon = document.getElementById('notification-icon');
+    var notificationMenu = document.getElementById('notification-menu');
+
+    notificationIcon.addEventListener('click', function (event) {
+      event.preventDefault();
+      notificationMenu.classList.toggle('show');
+    });
+  });
+
+//   document.addEventListener('DOMContentLoaded', function () {
+//     var filterOptions = document.querySelectorAll('.filter-option');
+//     var articles = document.querySelectorAll('.promoted-articles__list .col-lg-4');
+
+//     filterOptions.forEach(function (option) {
+//       option.addEventListener('click', function () {
+//         var status = option.dataset.status;
+
+//         // Ẩn tất cả các bài viết
+//         articles.forEach(function (article) {
+//           article.style.display = 'none';
+//         });
+
+//         // Hiển thị các bài viết có trạng thái tương ứng
+//         if (status === 'cho-tiep-nhan') {
+//           document.querySelectorAll('.promoted-articles__list .col-lg-4 .status-box.submit').forEach(function (article) {
+//             article.closest('.col-lg-4').style.display = 'block';
+//           });
+//         } else if (status === 'da-tiep-nhan') {
+//           document.querySelectorAll('.promoted-articles__list .col-lg-4 .status-box.received').forEach(function (article) {
+//             article.closest('.col-lg-4').style.display = 'block';
+//           });
+//         } else if (status === 'hoan-thanh') {
+//           document.querySelectorAll('.promoted-articles__list .col-lg-4 .status-box.processed').forEach(function (article) {
+//             article.closest('.col-lg-4').style.display = 'block';
+//           });
+//         } else if (status === 'dang-xu-ly') {
+//           document.querySelectorAll('.promoted-articles__list .col-lg-4 .status-box.employee').forEach(function (article) {
+//             article.closest('.col-lg-4').style.display = 'block';
+//           });
+//         }
+
+
+//       });
+//     });
+//   });
+
+
+
+
+
+</script>
+{% endblock %}

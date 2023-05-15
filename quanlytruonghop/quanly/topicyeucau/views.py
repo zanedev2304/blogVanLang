@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,HttpResponse
-from .forms import TopicForm,LoginForm,UserProfileForm,AssignTopicForm,ArticleForm
+from .forms import TopicForm,LoginForm,UserProfileForm,AssignTopicForm,ArticleForm,KnowledgeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
@@ -157,6 +157,13 @@ def create_article(request):
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'client/articles/article_detail.html'
+    context_object_name = 'article'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['knowledge'] = self.object.knowledge
+        return context
+
 
 def article_list(request):
     articles = Article.objects.all()
@@ -226,15 +233,29 @@ def article_unhide_view(request, pk):
 
 class KnowledgeDetailView(DetailView):
     model = Knowledge
-    template_name = 'client/knowledge_detail.html'
+    template_name = 'client/knowledge/knowledge_detail.html'
 
-def knowledge(request):
+
+def create_knowledge(request):
+    if request.method == 'POST':
+        form = KnowledgeForm(request.POST, request.FILES)
+        if form.is_valid():
+            knowledge = form.save(commit=False)
+            knowledge.save()
+            return redirect('home')
+    else:
+        form = KnowledgeForm()
+    
+    context = {'form': form}
+    return render(request, 'client/knowledge/create_knowledge.html', context)
+
+def knowledge_list(request):
     knowledges = Knowledge.objects.all()
-    return render(request, 'client/knowledge.html', {'knowledges': knowledges})
-
+    return render(request, 'client/knowledge/knowledge_list.html', {'knowledges': knowledges})
 
 
 #--------------------KNOWLEDGE(KNOWLEDGE)--------------------------
+
 
 
 

@@ -1,6 +1,6 @@
 from django import forms
 from ckeditor.widgets import CKEditorWidget
-from .models import Topic,UserProfile,Category,MyTopic,Article
+from .models import Topic,UserProfile,Category,MyTopic,Article,Knowledge
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import Group,User
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -69,19 +69,38 @@ class AssignTopicForm(forms.ModelForm):
             self.is_end_time_updated = True
         return cleaned_data
 
+
+class KnowledgeForm(forms.ModelForm):
+    class Meta:
+        model = Knowledge
+        fields = ['category', 'content', 'image']
+        labels = {
+            'category': 'Thể loại',
+            'content':'Nội dung',
+            'image':'Hình ảnh',
+        }
     
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+        labels = {
+            'name':'Tên thể loại',
+        }  
     
     
 class ArticleForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget(config_name='default'))
     class Meta:
         model = Article
-        fields = ['title', 'category','content', 'image']
+        fields = ['title', 'category','content', 'image','knowledge']
         labels = {
             'title':'Chủ đề',
             'category': 'Thể loại',
             'content':'Nội dung',
             'image':'Hình ảnh',
+            'knowledge':'Knowledge',
         }
 
 

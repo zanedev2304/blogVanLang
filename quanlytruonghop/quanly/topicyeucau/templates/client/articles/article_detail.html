@@ -82,6 +82,9 @@
   .left-menu {
     margin-top: -40px;
   }
+  footer.text-center.text-lg-start.custom-footer {
+    margin-top: 160px;
+  }
 </style>
 
 {% endblock %}
@@ -91,7 +94,11 @@
   <div class="column column--sm-8">
     <ol class="breadcrumbs">
       <li><a href="{% url 'home' %}">Home</a></li>
-      <li><a href="">Know ledge</a></li>
+      {% if knowledge %}
+        <li><a href="{% url 'knowledge_detail' knowledge.pk %}">{{ knowledge.category }}</a></li>
+      {% else %}
+        <li><a href="">Knowledge</a></li>
+      {% endif %}
       <li><a href="">Article</a></li>
     </ol>
   </div>
@@ -145,4 +152,7 @@
 </div>
 
 
+{% block footer%}{% endblock %}
+
 {% endblock %}
+

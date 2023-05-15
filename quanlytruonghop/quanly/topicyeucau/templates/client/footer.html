@@ -4,51 +4,33 @@
 
 {% block style %}
 <style>
-  /* Đổi màu nền của footer */
   footer {
     background-color: #013668;
-  }
-
-  /* Đổi màu chữ của footer */
-  footer {
     color: #fff;
-  }
-
-  /* Đổi kích thước font chữ của footer */
-  footer {
     font-size: 16px;
-  }
-
-  /* Thêm đường viền cho footer */
-  footer {
     border-top: 1px solid #ccc;
   }
 
-  /* Tăng khoảng cách giữa các hàng trong footer */
   footer ul {
     padding-top: 10px;
     padding-bottom: 10px;
   }
 
-  /* Đổi màu chữ cho các liên kết trong footer */
   footer a {
     color: #fff;
   }
 
-  /* Thêm hiệu ứng hover cho các liên kết trong footer */
   footer a:hover {
     text-decoration: none;
     background-color: transparent;
     color: #007bff;
   }
 
-  /* Đưa @2023 Đại học Văn Lang sang góc trái ngang hàng với Liên kết */
   footer .col-md-4.order-1 p {
     margin-bottom: 0;
     margin-top: auto;
   }
 
-  /* Responsive footer */
   @media (max-width: 767px) {
     footer .row {
       flex-direction: column;
@@ -58,6 +40,10 @@
       margin-left: 0;
       flex-basis: 100%;
     }
+  }
+
+  .custom-footer {
+    height: 384px;
   }
 </style>
 
@@ -69,10 +55,10 @@
   <div class="container p-4">
     <div class="row">
       <div class="col-md-4">
-        <b style="color:#fff">© 2023 Đại học Văn Lang: Bản quyền thuộc về trường Đại học Văn Lang.</b>
+        <b style="color:#fff">© 2023 ITHelpDesk</b>
       </div>
 
-      <div class="col-md-2" style="color:#fff;">
+      <!-- <div class="col-md-2" style="color:#fff;">
         <h5 class="text-uppercase">Liên kết</h5>
         <hr>
 
@@ -92,30 +78,26 @@
 
 
         </div>
-      </div>
+      </div> -->
 
       <div class="col-md-6" style="color: #fff;">
-        <h5 class="text-uppercase">Trường Đại học Văn Lang</h5>
+        <h5 class="text-uppercase">Trường hợp khẩn cấp, Thầy/Cô liên hệ:</h5>
         <hr>
 
-        <div>
-          <div>
-            <span class="glyphicon glyphicon-map-marker" style="font-size:24px; color:#C25574"></span>
-            <b>Trụ sở: 45 Nguyễn Khắc Nhu, P. Cô Giang, Q.1, TP. HCM</b>
-          </div>
-          <div>
-            <span class="glyphicon glyphicon-map-marker" style="font-size:24px; color:#C25574"></span>
-            <b>Cơ sở 2: 233A Phan Văn Trị, P.11, Q. Bình Thạnh, TP. HCM</b>
-          </div>
-          <div>
-            <span class="glyphicon glyphicon-map-marker" style="font-size:24px; color:#C25574"></span>
-            <b>Cơ sở 3: 69/68 Đặng Thùy Trâm, P. 13, Q. Bình Thạnh, TP. HCM</b>
-          </div>
-          <div>
-            <span class="glyphicon glyphicon-map-marker" style="font-size:24px; color:#C25574"></span>
-            <b>Ký túc xá: 160/63A-B Phan Huy Ích, P. 12, Q. Gò Vấp, TP. HCM</b>
-          </div>
-        </div>
+        <ul>
+          <li><b>Phòng CNTT: <a href="tel:02871099131">028 710 99 131</a></b></li>
+          <li>
+            <b>Bộ phận CSVC (âm thanh, máy chiếu, điện,..):</b>
+            <ul>
+              <li>CS1: <a href="tel:02871099143">028 710 99 143</a></li>
+              <li>CS2: <a href="tel:02871099133">028 710 99 133</a></li>
+              <li>CS3: <a href="tel:02871099139">028 710 99 139</a></li>
+            </ul>
+          </li>
+          <p style="float: right; right: 0;">Phòng Công nghệ thông tin</p>
+        </ul>
+        
+
 
       </div>
 

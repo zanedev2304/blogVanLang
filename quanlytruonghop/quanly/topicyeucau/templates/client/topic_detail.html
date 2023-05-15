@@ -177,7 +177,7 @@
 
 
       <p>
-        {% if user.is_staff %}
+        {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
         <a href="{% url 'manage_request' %}">Danh sách chủ đề</a>
         {% else %}
         <a href="{% url 'my-topic' %}">Quay lại danh sách chủ đề của tôi</a>

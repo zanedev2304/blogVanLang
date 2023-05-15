@@ -64,11 +64,22 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class Knowledge(models.Model):
+    category = models.CharField(max_length=255)
+    content = models.CharField(max_length=255,blank=True,null=True)
+    image = models.ImageField(upload_to='images/knowledge', blank=True, null=True, default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    url = models.CharField(max_length=255,blank=True,null=True)
+    
 
+    def __str__(self):
+        return self.category
 
 class Article(models.Model):
     title = models.CharField(max_length=255)
-    category = models.CharField(max_length=255,default='other')
+    category = models.CharField(max_length=255)
     content = RichTextUploadingField(blank=True, null=True)
     image = models.ImageField(upload_to='articles/', blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -78,12 +89,17 @@ class Article(models.Model):
     views = models.PositiveIntegerField(default=0)
     like_count = models.PositiveIntegerField(default=0)
     hidden = models.BooleanField(default=False)
+    knowledge = models.ForeignKey(Knowledge, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.title
     
     def get_absolute_url(self):
+        if self.knowledge and self.knowledge.url:
+            return self.knowledge.url
         return reverse('article_detail', args=[str(self.id)])
+
+    
 
     def add_like(self, user):
         if user not in self.likes.all():
@@ -91,16 +107,9 @@ class Article(models.Model):
             self.like_count += 1
             self.save()
 
-class Knowledge(models.Model):
-    content = models.TextField(blank=True,null=True)
-    category = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='images/knowledge', blank=True, null=True, default=None)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    url = models.CharField(max_length=255,blank=True,null=True)
+    
 
-    def __str__(self):
-        return self.content
+
 
 
 class Image(models.Model):
