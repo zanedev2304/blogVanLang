@@ -96,10 +96,6 @@
         <nav class="animated bounceInDown">
             <ul id="sidebar">
                 <li class="active">
-                    <a href="{% url 'home'%}" ><i class="fas fa-home"></i>Trang chủ</a>
-                </li>
-
-                <li>
                     <a href="{% url 'manage_request'%}" ><i class="fas fa-home"></i>Quản lý yêu cầu</a>
                 </li>
 
@@ -107,8 +103,36 @@
                     <a href="{% url 'manage_view'%}" ><i class="fas fa-home"></i>Dashboard</a>
                 </li>
 
+                <li class="sub-menu">
+                    <a href="#!" ><i class="fas fa-home"></i>Quản lý bài viết
+                        <div class="fa fa-caret-down right"></div>
+                    </a>
+                    <ul class="left-menu-dp">
+                        <li><a href="{% url 'create_article'%}"><i class="fas fa-user-circle"></i>Viết bài viết</a></li>
+                        <li><a href="{% url 'create_article'%}"><i class="fas fa-user-circle"></i>Danh sách bài viết</a></li>
+                    </ul>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="#!" ><i class="fas fa-home"></i>Quản lý Knowledge
+                        <div class="fa fa-caret-down right"></div>
+                    </a>
+                    <ul class="left-menu-dp">
+                        <li><a href=""><i class="fas fa-user-circle"></i>Tạo Knowledge</a></li>
+                        <li><a href=""><i class="fas fa-user-circle"></i>Danh sách Knowledge</a></li>
+                    </ul>
+                </li>
+                
                 <li>
-                    <a href="" ><i class="fas fa-home"></i>Bài nổi bật</a>
+                    <a href="" ><i class="fas fa-home"></i>Danh sách Sinh viên</a>
+                </li>
+                
+                <li>
+                    <a href="" ><i class="fas fa-home"></i>Danh sách Nhân viên</a>
+                </li>
+                
+                <li>
+                    <a href="" ><i class="fas fa-home"></i></a>
                 </li>
             </ul>
         </nav>

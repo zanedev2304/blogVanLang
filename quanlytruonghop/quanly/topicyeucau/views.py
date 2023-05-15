@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,HttpResponse
-from .forms import TopicForm,LoginForm,UserProfileForm,AssignTopicForm
+from .forms import TopicForm,LoginForm,UserProfileForm,AssignTopicForm,ArticleForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
@@ -18,6 +18,14 @@ from django.contrib.auth.models import Group,User
 import datetime
 from django.http import JsonResponse
 from django.http import HttpResponse, JsonResponse, HttpRequest
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView, DeleteView
+from django.views.decorators.http import require_POST
+
+
+
+#----------------------------manageUser(View) -------------------------------------
+
 
 def user_in_group(user, group_name):
     """
@@ -29,51 +37,20 @@ def user_in_group(user, group_name):
     except Group.DoesNotExist:
         return False
 
-#----------------------------manageUser(View) -------------------------------------
-
-
-
-
-class MyTopicView(View):
-    def start_timer(self, mytopic):
-        mytopic.start_time_request = datetime.datetime.now()
-        mytopic.save()
-
-    def end_timer(self, mytopic):
-        mytopic.end_time = datetime.datetime.now()
-        elapsed_time = mytopic.end_time - mytopic.start_time_request
-        mytopic.elapsed_time = elapsed_time.seconds
-        mytopic.save()
-
-    def get(self, request, *args, **kwargs):
-        mytopic = MyTopic.objects.get(pk=self.kwargs['mytopic_id'])
-        if mytopic.status == 'Đang xử lý':
-            self.start_timer(mytopic)
-
-        context = {'mytopic': mytopic}
-        return render(request, 'client/topic_detail.html', context)
-
-    def post(self, request, *args, **kwargs):
-        mytopic = MyTopic.objects.get(pk=self.kwargs['mytopic_id'])
-        if 'end_timer' in request.POST:
-            self.end_timer(mytopic)
-        elif 'start_timer' in request.POST:
-            self.start_timer(mytopic)
-        context = {'mytopic': mytopic}
-        return render(request, 'client/topic_detail.html', context)
 
 
 
 
 #----------------------------Quan ly tai khoan -------------------------------------
 def home_view(request):
-    article_list = Article.objects.all()
+    article_list = Article.objects.filter(hidden=False)  # Lọc ra các bài viết chưa bị ẩn
     knowledges = Knowledge.objects.all()
     context = {
         'article_list': article_list,
         'knowledges': knowledges,
     }
-    return render(request, 'client/home.html',context )
+    return render(request, 'client/home.html', context)
+
 
 
 
@@ -103,8 +80,6 @@ def logout_view(request):
     return redirect('login')
 
 
-# Check if user is staff or superuser
-# Check if user is staff or superuser
 
 def update_user_profile(request):
     user_profile = UserProfile.objects.get(user=request.user)
@@ -120,6 +95,10 @@ def update_user_profile(request):
 
     context = {'form': form}
     return render(request, 'client/account/update_profile.html', context)
+
+#----------------------------Quan ly tai khoan -------------------------------------
+
+
 
 
 
@@ -156,13 +135,93 @@ def mytopic(request):
 
 
 
+#--------------------BÀI VIẾT(ARTICLE)--------------------------
+
+def create_article(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.author = request.user
+            article.save()
+            return redirect('home')
+    else:
+        form = ArticleForm()
+    
+    context = {'form': form}
+    return render(request, 'client/articles/create_article.html', context)
 
 
 
 
 class ArticleDetailView(DetailView):
     model = Article
-    template_name = 'client/article_detail.html'
+    template_name = 'client/articles/article_detail.html'
+
+def article_list(request):
+    articles = Article.objects.all()
+    return render(request, 'client/articles/article_list.html', {'articles': articles})
+
+def article_update_view(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('article_detail', pk=article.pk)
+    else:
+        form = ArticleForm(instance=article)
+    
+    context = {'form': form, 'article': article}
+    return render(request, 'client/articles/article_update.html', context)
+
+def article_delete_view(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    
+    if request.method == 'POST':
+        article.delete()
+        return redirect('home')
+    
+    context = {'article': article}
+    return render(request, 'client/articles/article_delete.html', context)  # Điều hướng về trang chủ sau khi xoá bài viết
+
+
+
+@require_POST
+def article_hide_view(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    
+    if request.method == 'POST':
+        article.hidden = True
+        article.save()
+        return redirect('home')
+    
+    context = {'article': article}
+    return render(request, 'client/articles/article_detail.html', context)
+
+
+
+@require_POST
+def article_unhide_view(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    
+    if request.method == 'POST':
+        article.hidden = False
+        article.save()
+        print(article.hidden)
+        return redirect('home')  
+    
+    context = {'article': article}
+    return render(request, 'client/articles/article_detail.html', context)
+
+#--------------------BÀI VIẾT(ARTICLE)--------------------------
+
+
+
+#--------------------KNOWLEDGE(KNOWLEDGE)--------------------------
+
+
 
 
 class KnowledgeDetailView(DetailView):
@@ -175,7 +234,12 @@ def knowledge(request):
 
 
 
+#--------------------KNOWLEDGE(KNOWLEDGE)--------------------------
 
+
+
+
+#--------------------YÊU CẦU--------------------------
 
 
 def my_topic_detail(request, id):

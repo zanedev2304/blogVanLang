@@ -72,6 +72,17 @@ class AssignTopicForm(forms.ModelForm):
     
     
     
+class ArticleForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget(config_name='default'))
+    class Meta:
+        model = Article
+        fields = ['title', 'category','content', 'image']
+        labels = {
+            'title':'Chủ đề',
+            'category': 'Thể loại',
+            'content':'Nội dung',
+            'image':'Hình ảnh',
+        }
 
 
 

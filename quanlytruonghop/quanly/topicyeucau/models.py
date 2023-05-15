@@ -69,8 +69,7 @@ class UserProfile(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=255)
     category = models.CharField(max_length=255,default='other')
-    content = RichTextField()
-
+    content = RichTextUploadingField(blank=True, null=True)
     image = models.ImageField(upload_to='articles/', blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -78,6 +77,7 @@ class Article(models.Model):
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
     views = models.PositiveIntegerField(default=0)
     like_count = models.PositiveIntegerField(default=0)
+    hidden = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

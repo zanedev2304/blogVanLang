@@ -14,8 +14,6 @@ $(".sub-menu a").click(function(){
 })
 
 
-
-
 //SIDEBAR TOGGLE
 $(document).ready(function(){
     $("#toogleSidebar").click(function(){
@@ -23,6 +21,9 @@ $(document).ready(function(){
         $(".content-wrapper").toggleClass("hide");
     });
 });
+
+
+
 
 
 //Get start
