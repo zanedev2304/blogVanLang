@@ -61,8 +61,8 @@
                                         
                                         <img src="{{ request.user.userprofile.avatar.url }}" alt="" class="img-fluid mr-2">
                                         <div class="media-body">
-                                            <h5>{{ request.microsoft_user.displayName }}</h5>
-                                            <p> {{ request.microsoft_user.id }} </p>
+                                            <h5>{{ request.user.userprofile.name }}</h5>
+                                            <p> {{ request.user.userprofile.student_id }} </p>
                                             {% endif %}
                                             {%endif %}
                                     </div>

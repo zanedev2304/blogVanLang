@@ -26,9 +26,13 @@ class UserProfileForm(forms.ModelForm):
         }
 
 
-# trong file forms.py
+
+class CustomModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.userprofile.name
+
 class AssignTopicForm(forms.ModelForm):
-    employee = forms.ModelChoiceField(queryset=User.objects.none())  # Sử dụng queryset rỗng ban đầu
+    employee = CustomModelChoiceField(queryset=UserProfile.objects.all(), label='Nhân viên')
 
     class Meta:
         model = MyTopic
@@ -44,7 +48,6 @@ class AssignTopicForm(forms.ModelForm):
             self.fields['employee'].queryset = self.get_available_employees()
 
         self.is_end_time_updated = False
-        
 
     def get_available_employees(self):
         employees = User.objects.filter(groups__name='Employee')
@@ -68,7 +71,6 @@ class AssignTopicForm(forms.ModelForm):
             self.instance.end_time = timezone.now()
             self.is_end_time_updated = True
         return cleaned_data
-
 
 class KnowledgeForm(forms.ModelForm):
     class Meta:

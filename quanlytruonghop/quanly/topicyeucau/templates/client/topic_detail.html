@@ -116,8 +116,9 @@
 
     <div class="topic_detail_inf">
       <h4>Thông tin</h4>
-      <p><strong>Tác giả:</strong> {{ mytopic.topic.author }}</p>
-      <p><strong>Mã số sinh viên:</strong> {{ mytopic.topic.author }}</p>
+      <p><strong>Người gửi:</strong> {{ mytopic.topic.author.userprofile.name }}</p>
+      <p><strong>Mã:</strong> {{ mytopic.topic.author.userprofile.student_id }}</p>
+      <p><strong>Email:</strong> {{ mytopic.topic.author }}</p>
 
 
     </div>
@@ -130,7 +131,7 @@
       <p><strong>{{ mytopic.get_formatted_start_time_request }} : Yêu cầu của bạn đã được tiếp nhận</strong> </p>
       {% endif %}
       {% if mytopic.employee %}
-      <p><strong>{{ mytopic.get_formatted_start_time_employee }}: Yêu cầu của bạn được thực hiện bởi: {{ mytopic.employee }}</strong></p>
+      <p><strong>{{ mytopic.get_formatted_start_time_employee }}: Yêu cầu của bạn được thực hiện bởi: {{ mytopic.employee.userprofile.name }}</strong></p>
       {% endif %}
       {% if mytopic.status == 'Hoàn thành' %}
       <p><strong>{{ mytopic.get_formatted_end_time }} : Yêu cầu của bạn đã hoàn thành.</strong></p>
@@ -164,7 +165,7 @@
         <label for="{{ form.employee.id_for_label }}">{{ form.employee.label }}</label>
         {{ form.employee }}
         {% if mytopic.status != 'Hoàn thành' %}
-        <button type="submit" class="btn btn-primary">Giao phó</button>
+          <button type="submit" class="btn btn-primary">Giao phó</button>
         {% endif %}
       </form>
       {% if mytopic.status == 'Đang xử lý' %}
