@@ -52,28 +52,6 @@ INSTALLED_APPS = [
 
 
 
-MICROSOFT = {
-"app_id": "a55eb3d8-870b-4848-a772-298e85f6d6b5",
-"app_secret": "nwx8Q~NHEQZC-7ss1CIvPmI~nbTQub~DdBWu4duk",
-"redirect": "http://localhost:8000/microsoft_authentication/callback",
-"scopes": ["user.read"],
-"authority": "https://login.microsoftonline.com/common", # or using tenant "https://login.microsoftonline.com/{tenant}",
-"valid_email_domains": ["gmail.com", "outlook.com.vn", "vanlanguni.vn"],
-"logout_uri": "http://localhost:8000/admin/logout"
-}
-
-LOGIN_URL = "/microsoft_authentication/login"
-LOGIN_REDIRECT_URL = "/home"
-
-MICROSOFT_CREATE_NEW_DJANGO_USER = True
-
-
-
-
-
-
-
-
 
 
 MIDDLEWARE = [
@@ -84,9 +62,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'topicyeucau.middleware.LoginRedirectMiddleware'
-
+    'topicyeucau.middleware.LoginRedirectMiddleware',
+    'topicyeucau.middleware.MicrosoftUserMiddleware',
 ]
+
 
 ROOT_URLCONF = 'quanly.urls'
 
@@ -199,4 +178,7 @@ CRISPY_TEMPLATE_PACK = 'uni_form'
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+
+LOGIN_REDIRECT_URL = 'update_user_profile'
+

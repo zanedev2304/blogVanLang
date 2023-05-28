@@ -124,7 +124,11 @@
                 </div>
                 <div class="form-group">
                     <label for="id_phone">Số điện thoại:</label>
-                    {{ form.phone }}
+                    {% if request.microsoft_user.mobilephone %}
+                        {{ request.microsoft_user.mobilephone }}
+                    {% else %}
+                        {{ form.phone }}
+                    {% endif %}
                 </div>
                 <div class="form-group button-group">
                     <button type="submit" class="btn btn-primary">Cập nhật</button>

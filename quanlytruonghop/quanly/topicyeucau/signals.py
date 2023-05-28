@@ -20,6 +20,10 @@ def remove_staff_status(sender, user, request, **kwargs):
             user.save()
 
 
+
+
+
+
 @receiver(post_save, sender=MyTopic)
 def create_rating_for_topic(sender, instance, created, **kwargs):
     if instance.status == 'Hoàn thành':

@@ -4,11 +4,21 @@ from .views import create_article,article_list,create_knowledge,knowledge_list
 from django.contrib.auth.views import LoginView,LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
-
+from . import views 
 
 urlpatterns = [
-    path('microsoft_authentication/home',home_view,name='home'),
+
+    path('microsoft_authentication/callback', views.microsoft_callback, name='microsoft_callback'),
     path('',home_view,name='home'),
+ 
+    path('signin', views.sign_in, name='signin'),
+    path('signout', views.sign_out, name='signout'),
+    path('callback', views.callback, name='callback'),
+
+
+
+
+
     path('create_request/',create_request,name='create_request'),
     path('account/my-topic/', mytopic, name='my-topic'),
     path('login/',login_view,name='login'),
@@ -27,7 +37,7 @@ urlpatterns = [
     path('knowledge/<int:pk>/', KnowledgeDetailView.as_view(), name='knowledge_detail'),
     path('create_knowledge/', create_knowledge, name='create_knowledge'),
     path('knowledge_list/', knowledge_list, name='knowledge_list'),
-
+    
 
 
 

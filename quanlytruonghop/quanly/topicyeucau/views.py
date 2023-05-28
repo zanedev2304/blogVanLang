@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from .models import UserProfile,Topic,MyTopic,Article,Rating,Knowledge
 from django.views import View
 from django.utils.decorators import method_decorator
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden,HttpResponseRedirect
 from django.views.generic import ListView,DetailView
 from django.utils import timezone
 from django.utils.html import strip_tags
@@ -21,6 +21,14 @@ from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, DeleteView
 from django.views.decorators.http import require_POST
+from django.urls import reverse
+from quanly.auth_helper import get_sign_in_flow, get_token_from_code, store_user, remove_user_and_token, get_token
+from quanly.graph_helper import *
+from django.contrib import admin
+from django.contrib.admin import AdminSite
+
+
+
 
 
 
@@ -36,6 +44,7 @@ def user_in_group(user, group_name):
         return group in user.groups.all()
     except Group.DoesNotExist:
         return False
+    
 
 
 
@@ -52,6 +61,39 @@ def home_view(request):
     return render(request, 'client/home.html', context)
 
 
+
+def initialize_context(request):
+    context = {}
+    error = request.session.pop('flash_error', None)
+    if error is not None:
+        context['errors'] = []
+        context['errors'].append(error)
+    # Check for user in the session
+    context['user'] = request.session.get('user', {})
+    context['user']['is_authenticated'] = False
+    return context
+def sign_in(request):
+    # Get the sign-in flow
+    flow = get_sign_in_flow()
+    # Save the expected flow so we can use it in the callback
+    try:
+        request.session['auth_flow'] = flow
+    except Exception as e:
+        print(e)
+    # Redirect to the Azure sign-in page
+    return HttpResponseRedirect(flow['auth_uri'])
+def sign_out(request):
+    # Clear out the user and token
+    remove_user_and_token(request)
+    return HttpResponseRedirect(reverse('home'))
+def callback(request):
+    # Make the token request
+    result = get_token_from_code(request)
+    #Get the user's profile from graph_helper.py script
+    user = get_user(result['access_token']) 
+    # Store user from auth_helper.py script
+    store_user(request, user)
+    return HttpResponseRedirect(reverse('home'))
 
 
 def login_view(request):
@@ -78,9 +120,55 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+def microsoft_callback(request):
+    # Lấy mã truy cập từ callback
+    result = get_token_from_code(request)
+    if 'error' in result:
+        # Xử lý lỗi khi không thể lấy mã truy cập
+        # ...
+        return redirect('login')  # Chuyển hướng đến trang đăng nhập
+
+    # Lấy thông tin người dùng từ Microsoft
+    token = result['access_token']
+    user_data = get_user(token)
+
+    # Kiểm tra xem tài khoản đã tồn tại trong Django chưa
+    email = user_data['email'] if 'email' in user_data else user_data['userPrincipalName']
+    try:
+        user = User.objects.get(username=email)
+        created = False
+    except User.DoesNotExist:
+        user = User.objects.create_user(username=email, email=email)
+        created = True
+
+    # Cập nhật thông tin người dùng từ Microsoft
+    request.session['user'] = {
+        'is_authenticated': True,
+        'id': user_data['id'],
+        'displayName': user_data['displayName'],
+        'email': user_data['email'] if 'email' in user_data else user_data['userPrincipalName'],
+        'mobilephone': user_data['mobilePhone'],
+    }
+
+    # Đăng nhập người dùng vào Django
+    login(request, user)
+
+    user_profile, _ = UserProfile.objects.get_or_create(user=user)
+    name_parts = user_data['displayName'].split(' - ')
+    if len(name_parts) == 3:
+        user_profile.student_id = name_parts[0].strip()
+        user_profile.name = name_parts[1].strip()
+        user_profile.course = name_parts[2].strip()
+    else:
+        pass
+
+    user_profile.save()
+
+    # Chuyển hướng đến trang cập nhật thông tin tài khoản
+    return redirect('home')
 
 
-
+@login_required(login_url='login')
 def update_user_profile(request):
     user_profile = UserProfile.objects.get(user=request.user)
 

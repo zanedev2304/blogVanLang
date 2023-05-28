@@ -1,5 +1,10 @@
 from django.contrib import admin
 from .models import UserProfile,MyTopic,Topic,CustomUser,CustomUserManager,Article,Category,Rating,Knowledge
+from django.contrib.admin import AdminSite
+
+
+
+
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
@@ -41,3 +46,4 @@ admin.site.register(UserProfile, UserProfileAdmin)
 
 admin.site.register(CustomUser)
 admin.site.register(Article)
+
