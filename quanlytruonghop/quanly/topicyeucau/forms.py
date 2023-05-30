@@ -29,7 +29,8 @@ class UserProfileForm(forms.ModelForm):
 
 class CustomModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
-        return obj.userprofile.name
+        profile, created = UserProfile.objects.get_or_create(user=obj)
+        return profile.name
 
 class AssignTopicForm(forms.ModelForm):
     employee = CustomModelChoiceField(queryset=UserProfile.objects.all(), label='Nhân viên')
@@ -55,13 +56,16 @@ class AssignTopicForm(forms.ModelForm):
             assigned_employees = MyTopic.objects.exclude(pk=self.instance.pk).filter(status='Đang xử lý').values_list('employee_id', flat=True)
             employees = employees.exclude(pk__in=assigned_employees)
         return employees
-
+    
     def clean_employee(self):
         employee = self.cleaned_data['employee']
         if employee is not None:
             self.instance.status = 'Đang xử lý'
             self.instance.start_time_employee = timezone.now()
+            # Tạo UserProfile nếu chưa tồn tại
+            UserProfile.objects.get_or_create(user=employee)
         return employee
+
     
     def clean(self):
         cleaned_data = super().clean()

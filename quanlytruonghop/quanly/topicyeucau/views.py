@@ -420,16 +420,22 @@ def rate_topic(request):
 
 
 # -------------------------------MANGAGE VIEW-----------------------------
-@user_passes_test(lambda u: u.is_staff or u.is_superuser or user_in_group(u, 'manageUser'))
+@user_passes_test(lambda u: u.is_staff or u.is_superuser or user_in_group(u, 'manageUser') or user_in_group(u, 'Employee')) 
 def manage_view(request):
     return render(request,'client/dashboard.html')
 
 
 
-@user_passes_test(lambda u: u.is_staff or u.is_superuser or user_in_group(u, 'manageUser'))
+
+@user_passes_test(lambda u: u.is_staff or u.is_superuser or user_in_group(u, 'manageUser') or (user_in_group(u, 'Employee') and MyTopic.objects.filter(employee=u).exists()))
 def manage_request(request):
-    mytopics = MyTopic.objects.all()
-    return render(request, 'client/quanlyyeucau.html',{'mytopics': mytopics})
+    if user_in_group(request.user, 'manageUser'):
+        mytopics = MyTopic.objects.all()
+    else:
+        mytopics = MyTopic.objects.filter(employee=request.user)
+    return render(request, 'client/quanlyyeucau.html', {'mytopics': mytopics})
+
+
 
 
 

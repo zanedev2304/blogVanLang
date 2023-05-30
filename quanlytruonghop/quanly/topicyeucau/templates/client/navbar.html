@@ -15,7 +15,7 @@
         <header class="header navbar navbar-expand-sm expand-header">
             <div class="header-left d-flex">
                 <a href="{% url 'home'%}"><img src="{% static 'assets/client/img/logo.8e5334db.svg'%}" alt="" class=""></a>
-                {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
+                {% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " or "Employee" in user.groups.values_list|join:" " %}
                 <a href="#!" class="sidebarCollapse" id="toogleSidebar"data-placement="bottom">
                     <span class="fas fa-bars"></span>
                 </a>
@@ -89,7 +89,7 @@
     
 </div>
 
-{% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " %}
+{% if user.is_staff or user.is_superuser or "manageUser" in user.groups.values_list|join:" " or "Employee" in user.groups.values_list|join:" " %}
 <!-- sidebar -->
 <div class="left-menu">
     <div class="menubar-content">
